@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			<div class="my-4 grid grid-cols-[1fr] md:grid-cols-[1fr_1fr] gap-4">
-				<div class="card grid grid-cols-[20%_80%] md:grid-cols-[30%_70%] items-start poppins">
+				<div class="card bg-slate-150 grid grid-cols-[20%_80%] md:grid-cols-[30%_70%] items-start poppins">
 					<div class="rounded-md bg-yellow-500 py-4 flex">
 						<i class="bx bx-money m-auto text-3xl text-white"></i>
 					</div>
@@ -52,7 +52,7 @@
 						<p class="text-red-500 font-semibold text-sm">Belum lunas</p>
 					</div>
 				</div>
-				<div class="card grid grid-cols-[20%_80%] md:grid-cols-[30%_70%] items-start poppins">
+				<div class="card bg-slate-150 grid grid-cols-[20%_80%] md:grid-cols-[30%_70%] items-start poppins">
 					<div class="rounded-md bg-green-500 py-4 flex">
 						<i class="bx bx-money-withdraw m-auto text-3xl text-white"></i>
 					</div>
@@ -67,56 +67,4 @@
 
 		<!-- CHART JS -->
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<script>
-			const bar = document.getElementById('myChart');
-			chartBar(bar);
-			const bubble = document.querySelectorAll('.bubble');
-			bubble.forEach((el) => {
-				chartDonat(el,el.dataset.bubble);
-			});
-
-			function chartDonat(el,nilai) {
-				new Chart(el, {
-				    type: 'doughnut',
-				    data: {
-				      labels: ['RPL'],
-				      datasets: [{
-				        label: 'Jurusan',
-				        data: [nilai],
-				        borderWidth: 1,
-				        backgroundColor: ['blue']
-				      }]	
-				    },
-				    options: {
-				      scales: {
-				        y: {
-				          beginAtZero: true
-				        }
-				      }
-				    }
-				  });
-			}
-
-			function chartBar(element) {
-			   new Chart(element, {
-			    type: 'bar',
-			    data: {
-			      labels: ['RPL',"AKT","TKJ"],
-			      datasets: [{
-			        label: 'Jurusan',
-			        data: [25, 10, 11],
-			        borderWidth: 1,
-			        backgroundColor: ['blue']
-			      }]	
-			    },
-			    options: {
-			      scales: {
-			        y: {
-			          beginAtZero: true
-			        }
-			      }
-			    }
-			  });
-			}
-			 
-		</script>	
+		

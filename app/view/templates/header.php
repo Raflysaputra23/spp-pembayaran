@@ -99,15 +99,19 @@
 <main id="main" class="h-[92vh] mx-auto container">
 	<div class="container grid grid-cols-[60px_1fr] lg:grid-cols-[180px_1fr]  h-[100%]">
 		<aside id="aside" class="bg-white shadow-lg px-2 lg:px-4 py-2 h-[100%] poppins overflow-hidden" style="border-top-left-radius: .8rem;">
-			<a href="<?=Constant::DIRNAME?>dashboard" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 hover:text-white transition <?=($data['judul'] == "Dashboard") ? "active" : "" ?>"><i class="bx bx-menu text-lg"></i><p class="hidden lg:block">Dashboard</p></a>
-			<a href="" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 relative hover:text-white transition"><i class="bx bx-group text-xl"></i><p class="hidden lg:block">Siswa</p><i class="bx bx-chevron-right hidden lg:block toggle text-xl absolute end-[8px]"></i></a>
-			<div class="dropdown-menu h-0 overflow-hidden actives">
-				<a href="<?=Constant::DIRNAME?>siswa" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 relative hover:text-white transition <?=($data['judul'] == "Siswa") ? "active" : "" ?>"><i class="bx bx-group text-xl"></i><p class="hidden lg:block">Data Siswa</p></a>
-				<a href="<?=Constant::DIRNAME?>kelas" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 relative hover:text-white transition <?=($data['judul'] == "Kelas") ? "active" : "" ?>"><i class="bx bx-group text-xl"></i><p class="hidden lg:block">Kelas</p></a>
+
+			<a id="dashboard" href="<?=Constant::DIRNAME?>dashboard" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 hover:text-white transition <?=($data['judul'] == "Dashboard") ? "active" : "" ?>"><i class="bx bx-menu text-lg"></i><p class="hidden lg:block">Dashboard</p></a>
+
+			<a id="siswa" href="" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 relative hover:text-white transition"><i class="bx bx-group text-xl"></i><p class="hidden lg:block">Siswa</p><i class="bx bx-chevron-right hidden lg:block toggle text-xl absolute end-[8px]"></i></a>
+			<div class="h-0 overflow-hidden">
+				<a id="data-siswa" href="<?=Constant::DIRNAME?>siswa" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 relative hover:text-white transition <?=($data['judul'] == "Siswa") ? "active" : "" ?>"><i class="bx bx-group text-xl"></i><p class="hidden lg:block">Data Siswa</p></a>
+				<a id="kelas" href="<?=Constant::DIRNAME?>kelas" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 relative hover:text-white transition <?=($data['judul'] == "Kelas") ? "active" : "" ?>"><i class="bx bx-group text-xl"></i><p class="hidden lg:block">Kelas</p></a>
 			</div>
 
-			<a href="<?=Constant::DIRNAME?>spp" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 hover:text-white transition <?=($data['judul'] == "Spp") ? "active" : "" ?>"><i class="bx bx-money text-lg"></i><p class="hidden lg:block">SPP</p></a>
-			<a href="<?=Constant::DIRNAME?>history" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 hover:text-white transition <?=($data['judul'] == "History") ? "active" : "" ?>"><i class="bx bx-history text-lg"></i><p class="hidden lg:block">History</p></a>
+			<a id="spp" href="<?=Constant::DIRNAME?>spp" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 hover:text-white transition <?=($data['judul'] == "Spp") ? "active" : "" ?>"><i class="bx bx-money text-lg"></i><p class="hidden lg:block">SPP</p></a>
+
+			<a id="history" href="<?=Constant::DIRNAME?>history" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 hover:text-white transition <?=($data['judul'] == "History") ? "active" : "" ?>"><i class="bx bx-history text-lg"></i><p class="hidden lg:block">History</p></a>
+
 		</aside>
 		
 	

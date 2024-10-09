@@ -50,26 +50,3 @@
 				</table>
 			</div>
 		</section>
-
-		<script>
-			const btnDropdown = document.getElementById('btn-dropdown');
-			const boxDropdown = document.getElementById('box-dropdown');
-
-			btnDropdown.addEventListener('click', function() {
-				btnDropdown.classList.toggle('actives');
-
-				if(btnDropdown.classList.contains('actives')) {
-					boxDropdown.style.height = `${boxDropdown.scrollHeight}px`;
-					boxDropdown.style.transition = "all .3s ease";
-					btnDropdown.querySelector('i').style.rotate = "180deg";
-					btnDropdown.querySelector('i').style.transition = "all .3s ease";
-
-				} else {
-					boxDropdown.style.height = '0px';
-					boxDropdown.style.transition = "all .3s ease";
-					btnDropdown.querySelector('i').style.rotate = "0deg";
-					btnDropdown.querySelector('i').style.transition = "all .3s ease";
-				}
-			});
-
-		</script>
