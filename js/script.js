@@ -1,6 +1,7 @@
-import Dropdownbox from "http://localhost/pembayaranSPP/module/dropdown.js";
-import { aside } from "http://localhost/pembayaranSPP/module/tags.js";
-import { chartBar } from "http://localhost/pembayaranSPP/module/chart.js";
+import Dropdownbox from "http://localhost/pembayaranSPP/module/Dropdown.js";
+import CheckValiditas from "http://localhost/pembayaranSPP/module/CheckValiditas.js";
+import { aside, pathUrl, btnSetting } from "http://localhost/pembayaranSPP/module/tags.js";
+import { ChartBar } from "http://localhost/pembayaranSPP/module/Chart.js";
 
 const dirname = "http://localhost/pembayaranSPP/";
 const urlnow = window.location.pathname.split('/');
@@ -22,6 +23,28 @@ aside.addEventListener('click', (e) => {
     }
   }
 });
+
+if (pathUrl != null) {
+  let path = "";
+  let urlnow = window.location.pathname.split('/');
+  urlnow.splice(0,2, "Dashboard");
+  urlnow.forEach((u, key) => {
+    key++;
+    if (urlnow[urlnow.length - 1] == u) {
+      path += `<a href="${dirname+u}" class="text-blue-500">${u}</a>`;
+    } else {
+      path += `<a href="${dirname+u}">${u}</a>`;
+    }
+    if (urlnow.length != key) {
+      path += ' / ';
+    }
+  });
+  pathUrl.innerHTML = path;
+}
+
+btnSetting.addEventListener('click', function() {
+  Dropdownbox(this.nextElementSibling);
+});
 // END SCRIPT MAIN
 
 // SCRIPT DASHBOARD
@@ -31,7 +54,7 @@ aside.addEventListener('click', (e) => {
 // SCRIPT KELAS
 if (urlnow[2] == "kelas") {
   const chartKelas = document.getElementById('chartKelas');
-  chartBar(chartKelas, ["RPL","AKT","TKJ","MM"], [30,20,40,20],'Jurusan');
+  ChartBar(chartKelas, ["RPL","AKT","TKJ","MM"], [30,20,40,20],'Jurusan');
 
   const formJurusan = document.getElementById('form-jurusan');
   const formKelas = document.getElementById('form-kelas');
@@ -61,8 +84,48 @@ if (urlnow[2] == "siswa") {
   });
 
 }
-
 // END SCRIPT SISWA
+
+// SCRIPT LOGIN
+if (urlnow[2] == "login") {
+  const form = document.getElementById('login');
+  const inputs = form.querySelectorAll('input');
+  const eye = form.querySelector('.eye');
+  CheckValiditas(inputs);
+
+  eye.addEventListener('click', function() {
+    if (this.parentElement.querySelector('input').type == "password") {
+      this.classList.replace('fa-eye-slash','fa-eye');
+      this.parentElement.querySelector('input').type = "text";
+    } else {
+      this.classList.replace('fa-eye','fa-eye-slash');
+      this.parentElement.querySelector('input').type = "password";
+    }
+  });
+
+}
+// END SCRIPT LOGIN
+
+// SCRIPT REGISTER
+if (urlnow[2] == "register") {
+  const form = document.getElementById('register');
+  const inputs = form.querySelectorAll('input');
+  const eyes = form.querySelectorAll('.eye');
+  CheckValiditas(inputs);
+
+  eyes.forEach((eye) => {
+    eye.addEventListener('click', function() {
+      if (this.parentElement.querySelector('input').type == "password") {
+        this.classList.replace('fa-eye-slash','fa-eye');
+        this.parentElement.querySelector('input').type = "text";
+      } else {
+        this.classList.replace('fa-eye','fa-eye-slash');
+        this.parentElement.querySelector('input').type = "password";
+      }
+    });
+  });
+}
+// END SCRIPT REGISTER
 
 
 

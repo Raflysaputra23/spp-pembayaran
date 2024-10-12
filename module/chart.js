@@ -1,4 +1,4 @@
-export function chartBar(element, data, jumlahData) {
+export function ChartBar(element, data, jumlahData) {
   new Chart(element, {
   type: 'bar',
     data: {

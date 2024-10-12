@@ -9,6 +9,7 @@
 
 	<!-- ICONS -->
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="<?=Constant::DIRNAME?>tools/fontawesome/css/font-awesome.min.css">
 	<!-- SWEETALERT -->
 	<script src="tools/swetalert/sweetalert2.all.min.js"></script>
 	<link rel="stylesheet" href="tools/sweetalert/swetalert2.min.css">
@@ -46,15 +47,31 @@
 				font-family:'Poppins', sans-serif;
 			}
 
+			.btn-danger {
+				@apply py-2 px-3 rounded-md shadow-sm bg-red-500 text-white flex justify-center items-center gap-2;
+				font-family:'Poppins', sans-serif;
+			}
+
 			.btn-outline-primary {
 				@apply py-1 px-3 rounded-md shadow-sm border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white transition;
 				font-family:'Poppins',sans-serif;
 			}
+
 			.card {
 				@apply shadow-lg rounded-md p-3;
 			}
+
 			.control-input {
 				@apply py-1 px-2 rounded-md bg-transparent w-[100%] border outline-0;
+			}
+
+			.focus-input:focus ~ label,
+			.focus-input:valid ~ label {
+				@apply -translate-y-[1.6rem] bg-blue-700 text-white px-2 p-1 rounded-md text-[.9rem];
+			}
+
+			.check-value ~ label{
+				@apply -translate-y-[1.6rem] bg-blue-700 text-white px-2 p-1 rounded-md text-[.9rem];
 			}
 
 		}
@@ -78,6 +95,9 @@
 			.active {
 				@apply bg-blue-700 text-white;
 			}
+			.disabled {
+				@apply disabled:opacity-75 disabled:cursor-not-allowed;
+			}
 		}
 		
 	</style>
@@ -92,12 +112,19 @@
 		</section>
 		<section class="flex gap-5 items-center">
 			<button type="button"><i class="bx bxs-moon text-white text-2xl"></i></button>
-			<button type="button"><i class="bx bx-cog text-white text-2xl hover:rotate-[360deg] transition"></i></button>
+			<div class="relative">
+				<button id="btn-setting" type="button"><i class="bx bx-cog text-white text-2xl hover:rotate-[360deg] transition"></i></button>
+				<div class="absolute w-32 shadow-md end-0 mt-6 rounded-md poppins text-sm backdrop-blur-md bg-white/30 overflow-hidden h-0">
+					<!-- <a href="" class="w-[100%] block p-2 rounded-md flex items-center gap-2 hover:text-white hover:bg-red-500 transition"><i class="bx bx-log-out"></i> <span class="">Log out</span></a> -->
+					<a href="<?=Constant::DIRNAME?>login" class="w-[100%] block p-2 rounded-md flex items-center gap-2 hover:text-white hover:bg-green-500 transition"><i class="bx bx-log-in"></i> <span class="">Log in</span></a>
+					<a href="<?=Constant::DIRNAME?>register" class="w-[100%] block p-2 rounded-md flex items-center gap-2 hover:text-white hover:bg-red-500 transition"><i class="bx bx-log-out"></i> <span class="">Register</span></a>
+				</div>
+			</div>
 		</section>
 	</nav>
 </header>
 <main id="main" class="h-[92vh] mx-auto container">
-	<div class="container grid grid-cols-[60px_1fr] lg:grid-cols-[180px_1fr]  h-[100%]">
+	<div class="container grid grid-cols-[60px_1fr] lg:grid-cols-[180px_1fr] h-[100%]">
 		<aside id="aside" class="bg-white shadow-lg px-2 lg:px-4 py-2 h-[100%] poppins overflow-hidden" style="border-top-left-radius: .8rem;">
 
 			<a id="dashboard" href="<?=Constant::DIRNAME?>dashboard" class="w-100 p-2 rounded-md text-sm text-black flex justify-center lg:justify-start items-center gap-3 hover:bg-blue-700 hover:text-white transition <?=($data['judul'] == "Dashboard") ? "active" : "" ?>"><i class="bx bx-menu text-lg"></i><p class="hidden lg:block">Dashboard</p></a>

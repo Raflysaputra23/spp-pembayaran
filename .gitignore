@@ -1,5 +1,9 @@
 # TIDAK BOLEH DIPUSH!
-img/*
+img/*.jpg
+img/*.png
+img/*.jpeg
+
+
 
 # BOLEH DIPUSH
 !img/iconTitle.png
