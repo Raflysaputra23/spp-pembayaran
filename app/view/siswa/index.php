@@ -13,22 +13,31 @@
 				<div class="flex items-center gap-2">
 					<h3 class="">Tampilkan: </h3>
 					<div class="relative">
-						<button id="btn-dropdown" type="button" class="w-20 py-1 rounded-md bg-white gap-4 flex justify-center items-center shadow">10 <i class="bx bx-chevron-down"></i></button>
-						<div id="box-dropdown" class="mt-2 w-20 rounded-md bg-white/30 backdrop-blur-md shadow text-center w-[100%] absolute h-0 overflow-hidden">
+						<button id="btn-dropdown-show" type="button" class="w-20 py-1 rounded-md bg-white gap-4 flex justify-center items-center shadow"><span id="change-number">All</span><i class="bx bx-chevron-down"></i></button>
+						<div id="box-dropdown-show" class="mt-2 w-20 rounded-md bg-white/30 backdrop-blur-md shadow text-center w-[100%] absolute h-0 overflow-hidden z-10">
 							<a href="" class="flex justify-center p-2 hover:active transition">10</a>
 							<a href="" class="flex justify-center p-2 hover:active transition">25</a>
 							<a href="" class="flex justify-center p-2 hover:active transition">50</a>
 							<a href="" class="flex justify-center p-2 hover:active transition">100</a>
+							<a href="" class="flex justify-center p-2 hover:active transition">All</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="bg-white rounded-md p-2 overflow-auto shadow">
+			<div class="my-3 poppins flex items-center justify-between">
+				<form action="" class="flex items-center gap-5" method="post">
+					<input type="search" name="search" class="control-input w-100 md:w-52" list="datalist" autocomplete="on">
+					<button type="submit" class="btn-primary text-sm"><span class="hidden md:inline-block">Search</span><i class="bx bx-search"></i></button>
+				</form>
+
+			</div>
+			<div class="bg-white rounded-md p-2 overflow-auto shadow hover-scroll hidden-scroll">
 				<table class="w-[100%] min-w-[60rem] poppins">
 					<thead>
 						<tr class="">
-							<th class="p-1 w-16">No</th>
-							<th class="p-1">Nama Lengkap</th>
+							<th class="p-1 w-16">No <a id="btn-sort-id" href="" data-sort="ASC"><i class="bx bx-sort transition rotate-0"></i></a></th>
+							<th class="p-1 w-32">NISN <a id="btn-sort-nisn" href="" data-sort="ASC"><i class="bx bx-sort transition rotate-0"></i></a></th>
+							<th class="p-1">Nama Lengkap <a id="btn-sort-username" href="" data-sort="ASC"><i class="bx bx-sort transition rotate-0"></i></a></th>
 							<th class="p-1">L/P</th>
 							<th class="p-1">Kelas</th>
 							<th class="p-1">Jurusan</th>
@@ -38,7 +47,8 @@
 					<tbody>
 						<tr class="odd:bg-white even:bg-slate-50 border-y">
 							<td class="p-1 text-center">1</td>
-							<td class="p-1">Rafly</td>
+							<td class="p-1 text-center">2428371923</td>
+							<td class="p-1 text-start">Rafly</td>
 							<td class="p-1 text-center">L</td>
 							<td class="p-1 text-center">12</td>
 							<td class="p-1 text-center">RPL</td>
@@ -49,7 +59,8 @@
 						</tr>
 						<tr class="odd:bg-white even:bg-slate-50 border-y">
 							<td class="p-1 text-center">1</td>
-							<td class="p-1">Rafly</td>
+							<td class="p-1 text-center">2428371923</td>
+							<td class="p-1 text-start">Rafly</td>
 							<td class="p-1 text-center">L</td>
 							<td class="p-1 text-center">12</td>
 							<td class="p-1 text-center">RPL</td>
@@ -60,7 +71,8 @@
 						</tr>
 						<tr class="odd:bg-white even:bg-slate-50 border-y">
 							<td class="p-1 text-center">1</td>
-							<td class="p-1">Rafly</td>
+							<td class="p-1 text-center">2428371923</td>
+							<td class="p-1 text-start">Rafly</td>
 							<td class="p-1 text-center">L</td>
 							<td class="p-1 text-center">12</td>
 							<td class="p-1 text-center">RPL</td>
