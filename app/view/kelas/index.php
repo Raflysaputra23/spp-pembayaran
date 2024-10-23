@@ -11,11 +11,11 @@
 			<div class="my-3 flex justify-between poppins">
 				<a id="btn-back" href="<?=Constant::DIRNAME?>dashboard" class="btn-primary text-sm shadow"><i class="bx bx-left-arrow-alt text-xl md:text-sm"></i><p class="hidden md:inline-block">Kembali</p></a>
 				<div class="flex items-center gap-2">
-					<a id="btn-kelas" href="" class="btn-primary text-sm shadow"><i class="bx bx-plus text-xl md:text-sm"></i><p class="hidden md:inline-block">Tambah Kelas</p></a>
+					<!-- <a id="btn-kelas" href="" class="btn-primary text-sm shadow"><i class="bx bx-plus text-xl md:text-sm"></i><p class="hidden md:inline-block">Tambah Kelas</p></a> -->
 					<a id="btn-jurusan" href="" class="btn-primary text-sm shadow"><i class="bx bx-plus text-xl md:text-sm"></i><p class="hidden md:inline-block">Tambah Jurusan</p></a>
 				</div>
 			</div>
-			<form id="form-kelas" action="" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
+			<!-- <form id="form-kelas" action="" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
 				<div class="grid grid-cols-[1fr] md:grid-cols-[1fr_1fr] gap-5">
 					<div class="form-group my-1">
 						<label for="jurusan">Pilih Jurusan</label>
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<button type="submit" class="btn-primary text-sm mt-2">Submit</button>
-			</form>
+			</form> -->
 			<form id="form-jurusan" action="" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
 				<div class="grid grid-cols-[1fr] md:grid-cols-[1fr_1fr] gap-5">
 					<div class="form-group my-1">

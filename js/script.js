@@ -1,9 +1,9 @@
-import Dropdownbox from "http://localhost/pembayaranSPP/module/Dropdown.js";
-import CheckValiditas from "http://localhost/pembayaranSPP/module/CheckValiditas.js";
-import { aside, pathUrl, btnSetting } from "http://localhost/pembayaranSPP/module/tags.js";
-import { ChartBar } from "http://localhost/pembayaranSPP/module/Chart.js";
+import Dropdownbox from "http://localhost/spp-pembayaran/module/Dropdown.js";
+import CheckValiditas from "http://localhost/spp-pembayaran/module/CheckValiditas.js";
+import { aside, pathUrl, btnSetting } from "http://localhost/spp-pembayaran/module/tags.js";
+import { ChartBar } from "http://localhost/spp-pembayaran/module/Chart.js";
 
-const dirname = "http://localhost/pembayaranSPP/";
+const dirname = "http://localhost/spp-pembayaran/";
 const urlnow = window.location.pathname.split('/');
 
 
@@ -59,15 +59,15 @@ if (urlnow[2] == "kelas") {
   ChartBar(chartKelas, ["RPL","AKT","TKJ","MM"], [30,20,40,20],'Jurusan');
 
   const formJurusan = document.getElementById('form-jurusan');
-  const formKelas = document.getElementById('form-kelas');
+  // const formKelas = document.getElementById('form-kelas');
   const btnJurusan = document.getElementById('btn-jurusan');
-  const btnKelas = document.getElementById('btn-kelas');
+  // const btnKelas = document.getElementById('btn-kelas');
 
 
-  btnKelas.addEventListener('click', function(element) {
-    element.preventDefault();
-    Dropdownbox(formKelas)
-  });
+  // btnKelas.addEventListener('click', function(element) {
+  //   element.preventDefault();
+  //   Dropdownbox(formKelas)
+  // });
 
   btnJurusan.addEventListener('click', function(element) {
      element.preventDefault();  
@@ -148,10 +148,11 @@ if (urlnow[2] == "login") {
 
 // SCRIPT REGISTER
 if (urlnow[2] == "register") {
-  const form = document.getElementById('register');
-  const inputs = form.querySelectorAll('input');
-  const eyes = form.querySelectorAll('.eye');
-  CheckValiditas(inputs);
+  const form = document.getElementById('Manual-form');
+  const inputs = document.querySelectorAll('input');
+  const eyes = document.querySelectorAll('.eye');
+  const toggleForm = document.getElementById('toggle-form');
+  CheckValiditas(inputs); 
 
   eyes.forEach((eye) => {
     eye.addEventListener('click', function() {
@@ -164,6 +165,34 @@ if (urlnow[2] == "register") {
       }
     });
   });
+
+  toggleForm.addEventListener('click', (e) => {
+    if(e.target.id == "manual") {
+      document.getElementById('Manual-form').classList.remove('hidden');
+      document.getElementById('Otomatis-form').classList.add('hidden');
+      document.getElementById('Admin-form').classList.add('hidden');
+      e.target.classList.replace('btn-outline-primary','btn-primary');
+      e.target.nextElementSibling.classList.replace('btn-primary','btn-outline-primary');
+      e.target.nextElementSibling.nextElementSibling.classList.replace('btn-primary','btn-outline-primary');
+    } else if(e.target.id == "otomatis") {
+      document.getElementById('Otomatis-form').classList.remove('hidden');
+      document.getElementById('Manual-form').classList.add('hidden');
+      document.getElementById('Admin-form').classList.add('hidden');
+      e.target.classList.replace('btn-outline-primary','btn-primary');
+      e.target.previousElementSibling.classList.replace('btn-primary','btn-outline-primary');
+      e.target.nextElementSibling.classList.replace('btn-primary','btn-outline-primary');
+    } else if(e.target.id == "admin") {
+      document.getElementById('Admin-form').classList.remove('hidden');
+      document.getElementById('Manual-form').classList.add('hidden');
+      document.getElementById('Otomatis-form').classList.add('hidden');
+      e.target.classList.replace('btn-outline-primary','btn-primary');
+      e.target.previousElementSibling.classList.replace('btn-primary','btn-outline-primary');
+      e.target.previousElementSibling.previousElementSibling.classList.replace('btn-primary','btn-outline-primary');
+    }
+
+  });
+
+
 }
 // END SCRIPT REGISTER
 

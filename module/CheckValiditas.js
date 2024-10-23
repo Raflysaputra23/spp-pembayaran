@@ -22,7 +22,7 @@ export default function CheckValiditas(inputs) {
 
 	      // CHECK VALIDITAS
 	      if(!this.validity.valid) {
-	        pesan.innerHTML = (this.type != "email") ? "Minimal 4 Huruf/Angka" : "Masukkan Email Yang Valid!";
+	        pesan.innerHTML = (this.name != "email" && this.name != "nisn") ? `Minimal ${this.getAttribute("minlength")} Huruf/Angka!` : `Masukkan ${this.name} Yang Valid!`;
 	        checkValid(this, pesan);
 	      } else {
 	        pesan.innerHTML = "Valid";

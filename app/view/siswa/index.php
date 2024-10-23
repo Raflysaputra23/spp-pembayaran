@@ -60,10 +60,10 @@
 						<tr class="odd:bg-white even:bg-slate-50 border-y">
 							<td class="p-1 text-center">1</td>
 							<td class="p-1 text-center">2428371923</td>
-							<td class="p-1 text-start">Rafly</td>
-							<td class="p-1 text-center">L</td>
-							<td class="p-1 text-center">12</td>
-							<td class="p-1 text-center">RPL</td>
+							<td class="p-1 text-start">Lili ramadhani</td>
+							<td class="p-1 text-center">P</td>
+							<td class="p-1 text-center">2</td>
+							<td class="p-1 text-center">SMP</td>
 							<td class="p-2 flex gap-1">
 								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-trash m-auto"></i></a>
 								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-pencil m-auto"></i></a>

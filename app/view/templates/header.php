@@ -69,7 +69,7 @@
 			}
 
 			.btn-outline-primary {
-				@apply py-1 px-3 rounded-md shadow-sm border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white transition;
+				@apply py-2 px-3 rounded-md shadow-sm border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white transition;
 				font-family:'Poppins',sans-serif;
 			}
 
@@ -123,8 +123,8 @@
 <header id="header" class="h-[8vh] mx-auto container">
 	<nav class="bg-primary px-5 flex justify-between h-[100%]" style="border-bottom-right-radius: .8rem; border-bottom-left-radius: .8rem;">
 		<section class="flex items-center gap-3 poppins text-white relative">
-			<img src="<?=Constant::DIRNAME?>/img/iconTitle.png" alt="" class="rounded-full w-10 h-10 shadow-md border">
-			<a href=""><h3 class="text-sm w-52 leading-[15px] flex items-center gap-1">M. Rafly Saputra <i class="bx bx-chevron-down text-lg"></i></h3></a>
+			<img src="<?=Constant::DIRNAME?>img/iconTitle.png" alt="" class="rounded-full w-10 h-10 shadow-md border">
+			<a href="<?=Constant::DIRNAME?>profil"><h3 class="text-sm w-52 leading-[15px] flex items-center gap-1">M. Rafly Saputra <i class="bx bx-chevron-down text-lg"></i></h3></a>
 		</section>
 		<section class="flex gap-5 items-center">
 			<button type="button"><i class="bx bxs-moon text-white text-2xl"></i></button>
