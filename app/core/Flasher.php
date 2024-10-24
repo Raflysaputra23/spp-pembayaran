@@ -21,8 +21,8 @@ class Flasher {
                     }
                 });
                 Toast.fire({
-                    icon: '".$_SESSION["flash"]["type"]."',
-                    title: '".$_SESSION["flash"]["pesan"]."'
+                    icon: '{$_SESSION['flash']['type']}',
+                    title: '{$_SESSION['flash']['pesan']}'
                 });
             </script>
             ";

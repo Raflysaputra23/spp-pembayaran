@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,6 +123,8 @@
 	</style>
 </head>
 <body class="overflow-hidden bg-gray">
+<!-- FLASHER -->
+<?=Flasher::getFlash()?>
 
 <header id="header" class="h-[8vh] mx-auto container">
 	<nav class="bg-primary px-5 flex justify-between h-[100%]" style="border-bottom-right-radius: .8rem; border-bottom-left-radius: .8rem;">
