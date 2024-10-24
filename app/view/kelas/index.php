@@ -1,8 +1,8 @@
 		<section class="p-5 md:p-10 lg:p-15 overflow-y-auto overflow-x-hidden">
 			<div class="flex items-center justify-between poppins bg-white p-4 rounded-md shadow">
 				<div class="flex items-center gap-3">
-					<i class="bx bxs-dashboard text-2xl text-blue-700"></i>
-					<h1 class="text-2xl text-blue-700 font-semibold">Kelas</h1>
+					<i class="bx bxs-dashboard text-md md:text-xl lg:text-2xl text-blue-700"></i>
+					<h1 class="text-md md:text-xl lg:text-2xl text-blue-700 font-semibold">Kelas</h1>
 				</div>
 				<div class="flex items-center poppins gap-2 text-sm">
 					<a id="path-url" href=""></a>
@@ -52,7 +52,7 @@
 				</div>
 				<button type="submit" class="btn-primary text-sm mt-2">Submit</button>
 			</form>
-			<div class="mt-10 grid grid-cols-[1fr_1fr] md:grid-cols-[1fr_1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr] gap-3">
+			<div class="mt-10 grid grid-cols-[1fr] md:grid-cols-[1fr_1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr] gap-3">
 				<div class="card grid grid-cols-[40%_60%] md:grid-cols-[40%_60%] items-start poppins">
 					<div class="rounded-md bg-blue-700 py-4 flex">
 						<i class="bx bx-user m-auto text-3xl text-white"></i>

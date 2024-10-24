@@ -81,6 +81,10 @@
 				@apply py-1 px-2 rounded-md bg-transparent w-[100%] border outline-0;
 			}
 
+			.alert-primary {
+				@apply p-5 rounded-md border border-l-4 border-t-0 border-b-0 border-r-0 border-blue-700 bg-cyan-200;
+			}
+
 			.focus-input:focus ~ label,
 			.focus-input:valid ~ label {
 				@apply -translate-y-[1.6rem] bg-blue-700 text-white px-2 p-1 rounded-md text-[.9rem];

@@ -1,5 +1,6 @@
 import Dropdownbox from "http://localhost/spp-pembayaran/module/Dropdown.js";
 import CheckValiditas from "http://localhost/spp-pembayaran/module/CheckValiditas.js";
+import NumberFormat from "http://localhost/spp-pembayaran/module/NumberFormat.js";
 import { aside, pathUrl, btnSetting } from "http://localhost/spp-pembayaran/module/tags.js";
 import { ChartBar } from "http://localhost/spp-pembayaran/module/Chart.js";
 
@@ -128,20 +129,37 @@ if (urlnow[2] == "siswa") {
 
 // SCRIPT LOGIN
 if (urlnow[2] == "login") {
-  const form = document.getElementById('login');
-  const inputs = form.querySelectorAll('input');
-  const eye = form.querySelector('.eye');
+  const form = document.getElementById('User-form');
+  const inputs = document.querySelectorAll('input');
+  const eyes = document.querySelectorAll('.eye');
+  const toggleForm = document.getElementById('toggle-form');
   CheckValiditas(inputs);
 
-  eye.addEventListener('click', function() {
-    if (this.parentElement.querySelector('input').type == "password") {
-      this.classList.replace('fa-eye-slash','fa-eye');
-      this.parentElement.querySelector('input').type = "text";
-    } else {
-      this.classList.replace('fa-eye','fa-eye-slash');
-      this.parentElement.querySelector('input').type = "password";
-    }
+  eyes.forEach((eye) => {
+    eye.addEventListener('click', function() {
+      if (this.parentElement.querySelector('input').type == "password") {
+        this.classList.replace('fa-eye-slash','fa-eye');
+        this.parentElement.querySelector('input').type = "text";
+      } else {
+        this.classList.replace('fa-eye','fa-eye-slash');
+        this.parentElement.querySelector('input').type = "password";
+      }
+    });
   });
+
+  toggleForm.addEventListener('click', (e) => {
+    if(e.target.id == "btn-user") {
+      document.getElementById("User-form").classList.remove("hidden");
+      document.getElementById("Admin-form").classList.add("hidden");
+      e.target.classList.replace("btn-outline-primary","btn-primary");
+      e.target.nextElementSibling.classList.replace("btn-primary","btn-outline-primary");
+    } else if(e.target.id == "btn-admin"){
+      document.getElementById("Admin-form").classList.remove("hidden");
+      document.getElementById("User-form").classList.add("hidden");
+      e.target.classList.replace("btn-outline-primary","btn-primary");
+      e.target.previousElementSibling.classList.replace("btn-primary","btn-outline-primary");
+    }
+  }); 
 
 }
 // END SCRIPT LOGIN
@@ -167,21 +185,21 @@ if (urlnow[2] == "register") {
   });
 
   toggleForm.addEventListener('click', (e) => {
-    if(e.target.id == "manual") {
+    if(e.target.id == "btn-manual") {
       document.getElementById('Manual-form').classList.remove('hidden');
       document.getElementById('Otomatis-form').classList.add('hidden');
       document.getElementById('Admin-form').classList.add('hidden');
       e.target.classList.replace('btn-outline-primary','btn-primary');
       e.target.nextElementSibling.classList.replace('btn-primary','btn-outline-primary');
       e.target.nextElementSibling.nextElementSibling.classList.replace('btn-primary','btn-outline-primary');
-    } else if(e.target.id == "otomatis") {
+    } else if(e.target.id == "btn-otomatis") {
       document.getElementById('Otomatis-form').classList.remove('hidden');
       document.getElementById('Manual-form').classList.add('hidden');
       document.getElementById('Admin-form').classList.add('hidden');
       e.target.classList.replace('btn-outline-primary','btn-primary');
       e.target.previousElementSibling.classList.replace('btn-primary','btn-outline-primary');
       e.target.nextElementSibling.classList.replace('btn-primary','btn-outline-primary');
-    } else if(e.target.id == "admin") {
+    } else if(e.target.id == "btn-admin") {
       document.getElementById('Admin-form').classList.remove('hidden');
       document.getElementById('Manual-form').classList.add('hidden');
       document.getElementById('Otomatis-form').classList.add('hidden');
@@ -195,6 +213,32 @@ if (urlnow[2] == "register") {
 
 }
 // END SCRIPT REGISTER
+
+// SCRIPT SPP
+if(urlnow[2] == "spp") {
+  const inputs = document.querySelectorAll('input');
+  let totalHarga = 0;
+  inputs.forEach((input) => {
+    input.addEventListener('change', function() {
+      if(this.checked) {
+        totalHarga += parseInt(this.dataset.harga);
+        document.getElementById('total-harga').innerHTML = `Rp. ${NumberFormat(totalHarga,0,'.','.')}`;
+        if(totalHarga != 0) {
+          document.getElementById('total-harga').nextElementSibling.removeAttribute('disabled','true');
+          document.getElementById('total-harga').nextElementSibling.classList.remove('disabled');
+        }
+      } else {
+        totalHarga -= parseInt(this.dataset.harga);
+        document.getElementById('total-harga').innerHTML = `Rp. ${NumberFormat(totalHarga,0,'.','.')}`;
+        if(totalHarga == 0) {
+          document.getElementById('total-harga').nextElementSibling.setAttribute('disabled','true');
+          document.getElementById('total-harga').nextElementSibling.classList.add('disabled');
+        } 
+      }
+    });
+  });
+}
+// END SCRIPT SPP
 
 
 

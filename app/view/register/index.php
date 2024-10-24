@@ -1,8 +1,8 @@
 		<section class="p-5 md:p-10 lg:p-15 overflow-y-auto overflow-x-hidden">
 			<div id="toggle-form" class="max-w-[400px] mx-auto flex gap-4 items-center mb-6">
-				<button id="manual" type="button" class="btn-outline-primary w-[100%]">User</button>
-				<button id="otomatis" type="button" class="btn-outline-primary w-[100%]">Via File</button>
-				<button id="admin" type="button" class="btn-primary w-[100%]">Admin</button>
+				<button id="btn-manual" type="button" class="btn-outline-primary w-[100%]">User</button>
+				<button id="btn-otomatis" type="button" class="btn-outline-primary w-[100%]">Via File</button>
+				<button id="btn-admin" type="button" class="btn-primary w-[100%]">Admin</button>
 			</div>
 			<form id="Manual-form" action="" class="container max-w-[400px] rounded-md shadow-lg m-auto p-4 hidden" method="post" autocomplete="off">
 				<h1 class="text-center text-4xl tillana text-shadow text-red-500 mb-10">Register</h1>

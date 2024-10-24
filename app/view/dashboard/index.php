@@ -5,7 +5,7 @@
 			</section>
 			<div class="my-8 grid grid-cols-[1fr] md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr] gap-4">
 				<div class="card bg-white poppins">
-					<div class="items-center grid grid-cols-[20%_80%] md:grid-cols-[40%_60%]">
+					<div class="items-center grid grid-cols-[30%_70%] md:grid-cols-[40%_60%]">
 						<div class="py-5 flex bg-blue-700 rounded-md">
 							<i class='bx bx-male-female text-3xl m-auto text-white'></i>
 						</div>
@@ -18,7 +18,7 @@
 					<a href="<?=Constant::DIRNAME?>siswa" class="flex items-center justify-center text-blue-700 group text-md md:text-sm">Lebih banyak <i class="bx bx-chevron-right group-hover:translate-x-[.3rem] transition"></i></a>
 				</div>
 				<div class="card bg-white poppins">
-					<div class="items-center grid grid-cols-[20%_80%] md:grid-cols-[40%_60%]">
+					<div class="items-center grid grid-cols-[30%_70%] md:grid-cols-[40%_60%]">
 						<div class="py-5 flex bg-red-500 rounded-md">
 							<i class='bx bx-female-sign text-3xl m-auto text-white'></i>
 						</div>
@@ -31,7 +31,7 @@
 					<a href="<?=Constant::DIRNAME?>siswa/laki-laki" class="flex items-center justify-center text-blue-700 group text-md md:text-sm">Lebih banyak <i class="bx bx-chevron-right group-hover:translate-x-[.3rem] transition"></i></a>
 				</div>
 				<div class="card bg-white poppins">
-					<div class="items-center grid grid-cols-[20%_80%] md:grid-cols-[40%_60%]">
+					<div class="items-center grid grid-cols-[30%_70%] md:grid-cols-[40%_60%]">
 						<div class="py-5 flex bg-pink-500 rounded-md">
 							<i class='bx bx-male-sign text-3xl m-auto text-white'></i>
 						</div>
@@ -44,7 +44,7 @@
 					<a href="<?=Constant::DIRNAME?>siswa/perempuan" class="flex items-center justify-center text-blue-700 group text-md md:text-sm">Lebih banyak <i class="bx bx-chevron-right group-hover:translate-x-[.3rem] transition"></i></a>
 				</div>
 				<div class="card bg-white poppins">
-					<div class="items-center grid grid-cols-[20%_80%] md:grid-cols-[40%_60%]">
+					<div class="items-center grid grid-cols-[30%_70%] md:grid-cols-[40%_60%]">
 						<div class="py-5 flex bg-cyan-400 rounded-md">
 							<i class='bx bx-history text-3xl m-auto text-white'></i>
 						</div>
