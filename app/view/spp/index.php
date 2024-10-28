@@ -34,7 +34,7 @@
 						</div>
 					</div>
 					<div class="absolute bottom-0 start-0 end-0 p-2 bg-blue-700 flex items-center gap-3">
-						<p id="total-harga" class="w-[70%] text-center text-lg text-white">Rp. 0</p>
+						<p id="total-harga" class="w-[70%] text-center text-lg text-white poppins">Rp. 0</p>
 						<button type="submit" class="btn-primary bg-green-500 w-[30%] shadow disabled" disabled>Bayar</button>
 					</div>
 				</div>

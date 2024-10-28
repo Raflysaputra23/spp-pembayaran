@@ -10,22 +10,27 @@ class Register_model {
     public function registerSingleUser($data) {
         $nisn = htmlspecialchars($data["nisn"]);
         $namaLengkap = htmlspecialchars(stripcslashes($data["namaLengkap"]));
+        $password = htmlspecialchars(stripcslashes($data["nisn"]));
         $jenkel = htmlspecialchars(stripcslashes($data["jenkel"]));
         $kelas = htmlspecialchars(stripcslashes($data["kelas"]));
         $jurusan = htmlspecialchars(stripcslashes($data["jurusan"]));
         $tanggalLahir = htmlspecialchars(stripcslashes($data["tanggalLahir"]));
 
         // CEK NISN USER
-        if($this->getDataUserSingle($nisn, "Nisn") != false) {
+        if($this->getDataUserSingle($nisn, "siswa") != false) {
             Flasher::setFlash('<p class="poppins text-sm">Siswa mempunyai nisn yang sama!</p>',"error");
             header('location: '.Constant::DIRNAME.'register');
             exit();
         }
 
+        // HASH PASSWORD
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
         try {
-            $this->db->query('INSERT INTO siswa (Nisn, Username, Jenkel, Kelas, Jurusan, TanggalLahir) VALUES (:nisn ,:namaLengkap ,:jenkel ,:kelas ,:jurusan , :tanggalLahir)');
+            $this->db->query('INSERT INTO siswa (Nisn, NamaLengkap, Password, Jenkel, Kelas, Jurusan, TanggalLahir) VALUES (:nisn ,:namaLengkap ,:password ,:jenkel ,:kelas ,:jurusan , :tanggalLahir)');
             $this->db->bind('nisn', $nisn);
             $this->db->bind('namaLengkap', $namaLengkap);
+            $this->db->bind('password', $password);
             $this->db->bind('jenkel', $jenkel);
             $this->db->bind('kelas', $kelas);
             $this->db->bind('jurusan', $jurusan);
@@ -45,7 +50,7 @@ class Register_model {
         $password2 = htmlspecialchars(stripcslashes($data["password2"]));
 
         // CEK USERNAME USER
-        if($this->getDataUserSingle($username, 'Username') != false) {
+        if($this->getDataUserSingle($username, 'users') != false) {
             Flasher::setFlash('<p class="poppins text-sm">Username sudah terdaftar!</p>',"error");
             header('location: '.Constant::DIRNAME.'register');
             exit();
@@ -77,8 +82,8 @@ class Register_model {
 
     public function registerAllUser($data) {
         $pathFile = $data["file-csv"]["tmp_name"];
-        $type = explode('/',$data["file-csv"]["type"]);
-        $type = $type[1];
+        $extensi = $data["file-csv"]["name"];
+        $extensi = pathinfo($extensi, PATHINFO_EXTENSION);
 
         // CEK INI FILE
         if(!is_file($pathFile)) {
@@ -88,7 +93,7 @@ class Register_model {
         }
 
         // CEK FILE CSV
-        if($type != "csv") {
+        if($extensi != "csv") {
             Flasher::setFlash('<p class="poppins text-sm">Pastikan hanya file CSV!</p>',"error");
 			header('location: '.Constant::DIRNAME.'register');
 			exit();
@@ -101,15 +106,17 @@ class Register_model {
         }
         while($data = fgetcsv($handle)) {
             $row = array_combine($header, $data);
-            if($this->getDataUserSingle($row["nisn"], "Nisn") != false) {
+            $password = password_hash($row["nisn"], PASSWORD_DEFAULT);
+            if($this->getDataUserSingle($row["nisn"], "siswa") != false) {
                 Flasher::setFlash('<p class="poppins text-sm">Salah satu siswa mempunyai nisn yang sama!</p>',"error");
                 header('location: '.Constant::DIRNAME.'register');
                 exit();
             }
             try {
-                $this->db->query('INSERT INTO siswa (Nisn, Username, Jenkel, Kelas, Jurusan, tanggalLahir) VALUES (:nisn ,:namaLengkap ,:jenkel ,:kelas ,:jurusan , :tanggalLahir)');
+                $this->db->query('INSERT INTO siswa (Nisn, NamaLengkap, Password, Jenkel, Kelas, Jurusan, tanggalLahir) VALUES (:nisn ,:namaLengkap ,:password ,:jenkel ,:kelas ,:jurusan , :tanggalLahir)');
                 $this->db->bind('nisn', htmlspecialchars(stripcslashes($row["nisn"])));
                 $this->db->bind('namaLengkap', htmlspecialchars(stripcslashes($row["username"])));
+                $this->db->bind('password', htmlspecialchars(stripcslashes($password)));
                 $this->db->bind('jenkel', htmlspecialchars(stripcslashes($row["jenkel"])));
                 $this->db->bind('kelas', htmlspecialchars(stripcslashes($row["kelas"])));
                 $this->db->bind('jurusan', htmlspecialchars(stripcslashes($row["jurusan"])));
@@ -124,14 +131,14 @@ class Register_model {
         fclose($handle);
     }
 
-    public function getDataUserSingle($data, $kolom) {
+    public function getDataUserSingle($data, $table) {
         try {
-            if($kolom == "Nisn") {
+            if($table == "siswa") {
                 $this->db->query("SELECT * FROM siswa WHERE Nisn = :user");
                 $this->db->bind("user", $data);
                 $this->db->execute();
                 return $this->db->single();
-            } else if($kolom == "Username"){
+            } else if($table == "users"){
                 $this->db->query("SELECT * FROM users WHERE Username = :user");
                 $this->db->bind("user", $data);
                 $this->db->execute();

@@ -25,11 +25,15 @@
 				</div>
 			</div>
 			<div class="my-3 poppins flex items-center justify-between">
-				<form action="" class="flex items-center gap-5" method="post">
-					<input type="search" name="search" class="control-input w-100 md:w-52" list="datalist" autocomplete="on">
+				<form id="form-search-siswa" action="" class="flex items-center gap-5" method="post">
+					<input type="search" name="search" class="control-input w-100 md:w-52 placeholder:text-sm" list="datalist" autocomplete="on" placeholder="Cari nama siswa...">
+					<datalist id="datalist">
+						<?php foreach($data["dataUser"]["siswa"] as $siswa) : ?>
+							<option value="<?=$siswa["NamaLengkap"];?>"><?=$siswa["NamaLengkap"];?></option>
+						<?php endforeach; ?>
+					</datalist>
 					<button type="submit" class="btn-primary text-sm"><span class="hidden md:inline-block">Search</span><i class="bx bx-search"></i></button>
 				</form>
-
 			</div>
 			<div class="bg-white rounded-md p-2 overflow-auto shadow hover-scroll hidden-scroll">
 				<table class="w-[100%] min-w-[60rem] poppins">
@@ -44,44 +48,25 @@
 							<th class="p-1 w-20">Aksi</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="table-siswa">
+					<?php foreach($data["dataUser"]["siswa"] as $siswa) : ?>
 						<tr class="odd:bg-white even:bg-slate-50 border-y">
-							<td class="p-1 text-center">1</td>
-							<td class="p-1 text-center">2428371923</td>
-							<td class="p-1 text-start">Rafly</td>
-							<td class="p-1 text-center">L</td>
-							<td class="p-1 text-center">12</td>
-							<td class="p-1 text-center">RPL</td>
+							<td class="p-1 text-center"><?=$data["dataUser"]["no"]++?></td>
+							<td class="p-1 text-center"><?=$siswa["Nisn"]?></td>
+							<td class="p-1 text-start"><?=$siswa["NamaLengkap"]?></td>
+							<td class="p-1 text-center uppercase"><?=$siswa["Jenkel"][0]?></td>
+							<td class="p-1 text-center"><?=$siswa["Kelas"]?></td>
+							<td class="p-1 text-center uppercase"><?=$siswa["Jurusan"]?></td>
 							<td class="p-2 flex gap-1">
-								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-trash m-auto"></i></a>
-								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-pencil m-auto"></i></a>
+								<a href="" data-siswa-id="<?=$siswa["SiswaID"]?>" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-trash m-auto"></i></a>
+								<a href="" data-siswa-id="<?=$siswa["SiswaID"]?>" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-pencil m-auto"></i></a>
 							</td>
 						</tr>
-						<tr class="odd:bg-white even:bg-slate-50 border-y">
-							<td class="p-1 text-center">1</td>
-							<td class="p-1 text-center">2428371923</td>
-							<td class="p-1 text-start">Lili ramadhani</td>
-							<td class="p-1 text-center">P</td>
-							<td class="p-1 text-center">2</td>
-							<td class="p-1 text-center">SMP</td>
-							<td class="p-2 flex gap-1">
-								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-trash m-auto"></i></a>
-								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-pencil m-auto"></i></a>
-							</td>
-						</tr>
-						<tr class="odd:bg-white even:bg-slate-50 border-y">
-							<td class="p-1 text-center">1</td>
-							<td class="p-1 text-center">2428371923</td>
-							<td class="p-1 text-start">Rafly</td>
-							<td class="p-1 text-center">L</td>
-							<td class="p-1 text-center">12</td>
-							<td class="p-1 text-center">RPL</td>
-							<td class="p-2 flex gap-1">
-								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-trash m-auto"></i></a>
-								<a href="" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-pencil m-auto"></i></a>
-							</td>
-						</tr>
+					<?php endforeach; ?>
 					</tbody>
 				</table>
 			</div>
+			<?php if($data["dataUser"]["siswa"] == false) : ?>
+				<h1 class="text-center text-xl lg:text-2xl my-6 poppins">Not Found <i class="bx bx-search"></i></h1>
+			<?php endif; ?>
 		</section>

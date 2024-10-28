@@ -2,6 +2,9 @@
 img/*.jpg
 img/*.png
 img/*.jpeg
+*.json
+node_modules/*
+css/*
 
 
 

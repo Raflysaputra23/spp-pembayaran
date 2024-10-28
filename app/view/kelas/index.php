@@ -12,7 +12,9 @@
 				<a id="btn-back" href="<?=Constant::DIRNAME?>dashboard" class="btn-primary text-sm shadow"><i class="bx bx-left-arrow-alt text-xl md:text-sm"></i><p class="hidden md:inline-block">Kembali</p></a>
 				<div class="flex items-center gap-2">
 					<!-- <a id="btn-kelas" href="" class="btn-primary text-sm shadow"><i class="bx bx-plus text-xl md:text-sm"></i><p class="hidden md:inline-block">Tambah Kelas</p></a> -->
+					<?php if($_SESSION["Role"] == "admin") : ?>
 					<a id="btn-jurusan" href="" class="btn-primary text-sm shadow"><i class="bx bx-plus text-xl md:text-sm"></i><p class="hidden md:inline-block">Tambah Jurusan</p></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<!-- <form id="form-kelas" action="" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
@@ -39,7 +41,8 @@
 				</div>
 				<button type="submit" class="btn-primary text-sm mt-2">Submit</button>
 			</form> -->
-			<form id="form-jurusan" action="" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
+			<?php if($_SESSION["Role"] == "admin") : ?>
+			<form id="form-jurusan" action="<?=Constant::DIRNAME?>kelas" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
 				<div class="grid grid-cols-[1fr] md:grid-cols-[1fr_1fr] gap-5">
 					<div class="form-group my-1">
 						<label for="jurusan">Nama Jurusan</label>
@@ -52,6 +55,7 @@
 				</div>
 				<button type="submit" class="btn-primary text-sm mt-2">Submit</button>
 			</form>
+			<?php endif; ?>
 			<div class="mt-10 grid grid-cols-[1fr] md:grid-cols-[1fr_1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr] gap-3">
 				<div class="card grid grid-cols-[40%_60%] md:grid-cols-[40%_60%] items-start poppins">
 					<div class="rounded-md bg-blue-700 py-4 flex">

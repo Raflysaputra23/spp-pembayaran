@@ -2,7 +2,7 @@
 
 
 class App {
-	private $class = "Home",
+	private $class = "Dashboard",
 			$method = "index",
 			$params = [];
 
@@ -42,7 +42,7 @@ class App {
 			$url = explode('/', $url);
 			return $url;
 		} else {
-			return ['Home'];
+			return ['Dashboard'];
 		}
 	}
 }

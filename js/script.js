@@ -1,11 +1,15 @@
-import Dropdownbox from "http://localhost/spp-pembayaran/module/Dropdown.js";
-import CheckValiditas from "http://localhost/spp-pembayaran/module/CheckValiditas.js";
-import NumberFormat from "http://localhost/spp-pembayaran/module/NumberFormat.js";
-import { aside, pathUrl, btnSetting } from "http://localhost/spp-pembayaran/module/tags.js";
-import { ChartBar } from "http://localhost/spp-pembayaran/module/Chart.js";
+import Dropdownbox from "http://localhost/spp-pembayaran/js/module/Dropdown.js";
+import CheckValiditas from "http://localhost/spp-pembayaran/js/module/CheckValiditas.js";
+import NumberFormat from "http://localhost/spp-pembayaran/js/module/NumberFormat.js";
+import ModalBox from "http://localhost/spp-pembayaran/js/module/ModalBox.js";
+import { aside, pathUrl, btnSetting, btnModalBox} from "http://localhost/spp-pembayaran/js/module/tags.js";
+import { ChartBar } from "http://localhost/spp-pembayaran/js/module/Chart.js";
 
 const dirname = "http://localhost/spp-pembayaran/";
 const urlnow = window.location.pathname.split('/');
+if(btnModalBox) {
+  ModalBox(btnModalBox);
+}
 
 
 // SCRIPT MAIN
@@ -69,11 +73,12 @@ if (urlnow[2] == "kelas") {
   //   element.preventDefault();
   //   Dropdownbox(formKelas)
   // });
-
-  btnJurusan.addEventListener('click', function(element) {
-     element.preventDefault();  
-     Dropdownbox(formJurusan);
-  });
+  if(btnJurusan) {
+    btnJurusan.addEventListener('click', function(element) {
+       element.preventDefault();  
+       Dropdownbox(formJurusan);
+    });
+  }
 }
 // END SCRIPT KELAS
 
@@ -83,6 +88,8 @@ if (urlnow[2] == "siswa") {
   const btnSortId = document.getElementById('btn-sort-id');
   const btnSortNisn = document.getElementById('btn-sort-nisn');
   const btnSortUsername = document.getElementById('btn-sort-username');
+  const formSearchSiswa = document.getElementById('form-search-siswa');
+  const tableSiswa = document.getElementById('table-siswa');
 
   btnDropdownShow.addEventListener('click', function() {
    Dropdownbox(this.nextElementSibling);
@@ -121,6 +128,35 @@ if (urlnow[2] == "siswa") {
     } else {
       this.querySelector('i').classList.replace('rotate-180','rotate-0');
       this.dataset.sort = "ASC";
+    }
+  });
+
+  formSearchSiswa.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(this);
+    let response = await fetch(`${dirname}siswa/searchData`, { method: "POST", body: data});
+    response = await response.json();
+    tableSiswa.innerHTML = "";
+    let no = 1;
+    if(response != false) {
+      response.forEach((data) => {
+        tableSiswa.innerHTML += `
+        <tr class="odd:bg-white even:bg-slate-50 border-y">
+          <td class="p-1 text-center">${no++}</td>
+          <td class="p-1 text-center">${data.Nisn}</td>
+          <td class="p-1 text-start">${data.NamaLengkap}</td>
+          <td class="p-1 text-center uppercase">${data.Jenkel[0]}</td>
+          <td class="p-1 text-center">${data.Kelas}</td>
+          <td class="p-1 text-center uppercase">${data.Jurusan}</td>
+          <td class="p-2 flex gap-1">
+            <a href="" data-siswa-id="${data.SiswaID}" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-trash m-auto"></i></a>
+            <a href="" data-siswa-id="${data.SiswaID}" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-pencil m-auto"></i></a>
+          </td>
+        </tr>
+          `;
+      });
+    } else {
+      tableSiswa.innerHTML = `<tr><td colspan="7" class="text-center py-10">Data tidak ditemukan</td></tr>`;
     }
   });
 
@@ -239,6 +275,41 @@ if(urlnow[2] == "spp") {
   });
 }
 // END SCRIPT SPP
+
+// SCRIPT PROFIL
+if(urlnow[2] == "profil") {
+  const uploadFoto = document.getElementById("upload-foto");
+  const plateFoto = document.getElementById("plate-foto");
+  const formUbahPassword = document.getElementById("form-ubah-password");
+  const alert = document.getElementById("alert");
+
+  // UPLOAD GAMBAR
+  uploadFoto.addEventListener('change', function() {
+    let fileFoto = this.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      if(this.readyState == 2) plateFoto.src = this.result;
+    }
+    reader.readAsDataURL(fileFoto);
+  });
+
+  formUbahPassword.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const data = new FormData(this);
+    alert.innerHTML = `<i class="bx bx-loader-alt text-2xl animate-spin"></i>`;
+
+    let response = await fetch(`${dirname}profil/getPassword`, { method: "POST", body: data });
+    response = await response.json();
+    if(response.status == "error") {
+      alert.innerHTML = `<span class="text-red-500 flex items-center">${response.pesan} <i class="bx bx-x text-md"></i></span>`;
+      setTimeout(() => { window.location.reload() },1000);
+    } else {
+      alert.innerHTML = `<span class="text-green-500 flex items-center">${response.pesan} <i class="bx bx-check text-md"></i></span>`;
+      setTimeout(() => { window.location.reload() },1000);
+    } 
+  });
+}
+// END SCRIPT PROFIL
 
 
 
