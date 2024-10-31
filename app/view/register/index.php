@@ -38,10 +38,11 @@
 						<p class="absolute end-[.1rem] text-sm -bottom-[1.3rem]"></p>
 					</div>
 					<div class="form-group mt-6 poppins relative w-[100%]">
-						<select name="jurusan" id="jurusan" class="control-input p-3 pb-2 focus-input uppercase	" required>
+						<select name="jurusan" id="jurusan" class="control-input p-3 pb-2 focus-input capitalize" required>
 							<option value="" readonly></option>
-							<option value="AK" class="uppercase">ak</option>
-							<option value="RPL" class="uppercase">rpl</option>
+							<?php foreach ($data['jurusan'] as $jurusan) : ?>
+								<option value="<?=$jurusan['JurusanID']?>"><?=$jurusan['NamaJurusan']?></option>
+							<?php endforeach; ?>
 						</select>
 						<label for="jurusan" class="absolute bottom-[.7rem] start-[.7rem] capitalize transition">jurusan</label>
 						<p class="absolute end-[.1rem] text-sm -bottom-[1.3rem]"></p>

@@ -29,8 +29,9 @@ class Login_model {
             if($this->getDataBulan($dataUser["SiswaID"], "read") == false) $this->getDataBulan($dataUser["SiswaID"], "insert");
             $_SESSION["UserID"] = $dataUser["SiswaID"];
             $_SESSION["Username"] = $dataUser["NamaLengkap"];
+            $_SESSION["Foto"] = $dataUser["Foto"];
             $_SESSION["Role"] = $dataUser["Role"];
-            $data = ["UserID" => $dataUser["SiswaID"], "Username" => $dataUser["NamaLengkap"], "Role" => $dataUser["Role"]];
+            $data = ["UserID" => $dataUser["SiswaID"], "Username" => $dataUser["NamaLengkap"], "Role" => $dataUser["Role"], "Foto" => $dataUser["Foto"]];
             if($remember) {
                 setcookie("cookie",password_hash(json_encode($data), PASSWORD_DEFAULT), time() + 60 * 24 * 30, "/");
                 setcookie("token",json_encode($data), time() + 60 * 24 * 30, "/");
@@ -60,8 +61,9 @@ class Login_model {
         } else {
             $_SESSION["UserID"] = $dataUser["UserID"];
             $_SESSION["Username"] = $dataUser["NamaLengkap"];
+            $_SESSION["Foto"] = $dataUser["Foto"];
             $_SESSION["Role"] = $dataUser["Role"];
-            $data = ["UserID" => $dataUser["UserID"], "Username" => $dataUser["NamaLengkap"], "Role" => $dataUser["Role"]];
+            $data = ["UserID" => $dataUser["UserID"], "Username" => $dataUser["NamaLengkap"], "Role" => $dataUser["Role"], "Foto" => $dataUser["Foto"]];
             if($remember) {
                 setcookie("cookie",password_hash(json_encode($data), PASSWORD_DEFAULT), time() + 60 * 24 * 30, "/");
                 setcookie("token",json_encode($data), time() + 60 * 24 * 30, "/");
@@ -74,7 +76,7 @@ class Login_model {
     public function getDataUserSingle($data, $table) {
         try{
             if($table == "siswa") {
-                $this->db->query("SELECT * FROM siswa WHERE Nisn = :nisn");
+                $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.Jurusan = jurusan.JurusanID AND Nisn = :nisn");
                 $this->db->bind("nisn", $data);
                 $this->db->execute();
                 return $this->db->single();

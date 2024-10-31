@@ -14,4 +14,12 @@ class Siswa extends Controllers {
 	public function searchData() {
 		echo json_encode($this->model("Siswa_model")->searchData($_POST));
 	}
+
+	public function getDataOrder() {
+		echo json_encode($this->model("Siswa_model")->getDataOrder(json_decode(file_get_contents('php://input'))));
+	}
+	
+	public function getDataSort() {
+		echo json_encode($this->model("Siswa_model")->getDataSort(json_decode(file_get_contents('php://input'))->data));
+	}
 }

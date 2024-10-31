@@ -2,6 +2,8 @@ import Dropdownbox from "http://localhost/spp-pembayaran/js/module/Dropdown.js";
 import CheckValiditas from "http://localhost/spp-pembayaran/js/module/CheckValiditas.js";
 import NumberFormat from "http://localhost/spp-pembayaran/js/module/NumberFormat.js";
 import ModalBox from "http://localhost/spp-pembayaran/js/module/ModalBox.js";
+import TableSiswa from "http://localhost/spp-pembayaran/js/module/TableSiswa.js";
+import SwetAlertMixin from "http://localhost/spp-pembayaran/js/module/SwetAlertMixin.js";
 import { aside, pathUrl, btnSetting, btnModalBox} from "http://localhost/spp-pembayaran/js/module/tags.js";
 import { ChartBar } from "http://localhost/spp-pembayaran/js/module/Chart.js";
 
@@ -85,31 +87,32 @@ if (urlnow[2] == "kelas") {
 // SCRIPT SISWA
 if (urlnow[2] == "siswa") {
   const btnDropdownShow = document.getElementById('btn-dropdown-show');
+  const boxDropdownShow = document.getElementById('box-dropdown-show');
   const btnSortId = document.getElementById('btn-sort-id');
   const btnSortNisn = document.getElementById('btn-sort-nisn');
   const btnSortUsername = document.getElementById('btn-sort-username');
   const formSearchSiswa = document.getElementById('form-search-siswa');
-  const tableSiswa = document.getElementById('table-siswa');
 
   btnDropdownShow.addEventListener('click', function() {
    Dropdownbox(this.nextElementSibling);
   });
 
-  btnSortId.addEventListener('click', function(e) {
-    e.preventDefault();
-    let dataSort = this.dataset.sort;
-    if(dataSort == "ASC") {
-      this.querySelector('i').classList.replace('rotate-0','rotate-180');
-      this.dataset.sort = "DESC";
-    } else {
-      this.querySelector('i').classList.replace('rotate-180','rotate-0');
-      this.dataset.sort = "ASC";
-    }
+  boxDropdownShow.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', async function(e) {
+      e.preventDefault();
+        let data = this.dataset.sort; 
+        let response = await fetch(`${dirname}siswa/getDataSort`, { method: "POST", body: JSON.stringify({data})});
+        response = await response.json();
+        TableSiswa(response);
+    });
   });
 
-  btnSortNisn.addEventListener('click', function(e) {
+
+
+  btnSortId.addEventListener('click', async function(e) {
     e.preventDefault();
     let dataSort = this.dataset.sort;
+    let dataColumn = this.dataset.column;
     if(dataSort == "ASC") {
       this.querySelector('i').classList.replace('rotate-0','rotate-180');
       this.dataset.sort = "DESC";
@@ -117,11 +120,17 @@ if (urlnow[2] == "siswa") {
       this.querySelector('i').classList.replace('rotate-180','rotate-0');
       this.dataset.sort = "ASC";
     }
+
+    let $data = { order: dataSort, column: dataColumn };
+    let response = await fetch(`${dirname}siswa/getDataOrder`, { method: "POST", body: JSON.stringify($data)});
+    response = await response.json();
+    TableSiswa(response);
   });
 
-  btnSortUsername.addEventListener('click', function(e) {
+  btnSortNisn.addEventListener('click', async function(e) {
     e.preventDefault();
     let dataSort = this.dataset.sort;
+    let dataColumn = this.dataset.column;
     if(dataSort == "ASC") {
       this.querySelector('i').classList.replace('rotate-0','rotate-180');
       this.dataset.sort = "DESC";
@@ -129,6 +138,29 @@ if (urlnow[2] == "siswa") {
       this.querySelector('i').classList.replace('rotate-180','rotate-0');
       this.dataset.sort = "ASC";
     }
+
+    let $data = { order: dataSort, column: dataColumn };
+    let response = await fetch(`${dirname}siswa/getDataOrder`, { method: "POST", body: JSON.stringify($data)});
+    response = await response.json();
+    TableSiswa(response);
+  });
+
+  btnSortUsername.addEventListener('click', async function(e) {
+    e.preventDefault();
+    let dataSort = this.dataset.sort;
+    let dataColumn = this.dataset.column;
+    if(dataSort == "ASC") {
+      this.querySelector('i').classList.replace('rotate-0','rotate-180');
+      this.dataset.sort = "DESC";
+    } else {
+      this.querySelector('i').classList.replace('rotate-180','rotate-0');
+      this.dataset.sort = "ASC";
+    }
+
+    let $data = { order: dataSort, column: dataColumn };
+    let response = await fetch(`${dirname}siswa/getDataOrder`, { method: "POST", body: JSON.stringify($data)});
+    response = await response.json();
+    TableSiswa(response);
   });
 
   formSearchSiswa.addEventListener('submit', async function(e) {
@@ -136,28 +168,7 @@ if (urlnow[2] == "siswa") {
     const data = new FormData(this);
     let response = await fetch(`${dirname}siswa/searchData`, { method: "POST", body: data});
     response = await response.json();
-    tableSiswa.innerHTML = "";
-    let no = 1;
-    if(response != false) {
-      response.forEach((data) => {
-        tableSiswa.innerHTML += `
-        <tr class="odd:bg-white even:bg-slate-50 border-y">
-          <td class="p-1 text-center">${no++}</td>
-          <td class="p-1 text-center">${data.Nisn}</td>
-          <td class="p-1 text-start">${data.NamaLengkap}</td>
-          <td class="p-1 text-center uppercase">${data.Jenkel[0]}</td>
-          <td class="p-1 text-center">${data.Kelas}</td>
-          <td class="p-1 text-center uppercase">${data.Jurusan}</td>
-          <td class="p-2 flex gap-1">
-            <a href="" data-siswa-id="${data.SiswaID}" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-trash m-auto"></i></a>
-            <a href="" data-siswa-id="${data.SiswaID}" class="w-8 h-8 flex bg-blue-700 rounded-md text-white"><i class="bx bx-pencil m-auto"></i></a>
-          </td>
-        </tr>
-          `;
-      });
-    } else {
-      tableSiswa.innerHTML = `<tr><td colspan="7" class="text-center py-10">Data tidak ditemukan</td></tr>`;
-    }
+    TableSiswa(response);
   });
 
 }
@@ -253,6 +264,8 @@ if (urlnow[2] == "register") {
 // SCRIPT SPP
 if(urlnow[2] == "spp") {
   const inputs = document.querySelectorAll('input');
+  const formSpp = document.getElementById('form-spp');
+  const btnSpp = document.getElementById('btn-spp');
   let totalHarga = 0;
   inputs.forEach((input) => {
     input.addEventListener('change', function() {
@@ -272,6 +285,20 @@ if(urlnow[2] == "spp") {
         } 
       }
     });
+  });
+
+  btnSpp.addEventListener('click', async function(e) {
+    e.preventDefault();
+    const data = new FormData(formSpp);
+    let response = await fetch(`${dirname}spp/buySpp`, { method: "POST", body: data});
+    response = await response.json();
+    if(response) {
+      SwetAlertMixin('success','Pembayaran SPP berhasil','<span class="text-green-500 poppins">Berhasil</span>');
+      setTimeout(() => {window.location.reload()}, 2000);
+    } else {
+      SwetAlertMixin('error','Pembayaran SPP gagal','<span class="text-red-500 poppins">Berhasil</span>');
+      setTimeout(() => {window.location.reload()}, 2000);
+    }
   });
 }
 // END SCRIPT SPP

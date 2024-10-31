@@ -27,7 +27,14 @@ class Profil_model {
                 $this->db->bind("notelp", $notelp);
                 $this->db->bind("jenkel", $jenkel);
                 $this->db->execute();
-                return $this->db->rowCount();
+                if($this->db->rowCount() > 0) {
+                    $dataUser = $this->getDataUserByID($SiswaID, $role);
+                    $_SESSION["Username"] = $dataUser["NamaLengkap"];
+                    $_SESSION["Foto"] = $dataUser["Foto"];
+                    return 1;
+                } else {
+                    return 0;
+                }
             } else if($role == "admin") {
                 $UserID = $_SESSION["UserID"];
                 $foto = ($_FILES["file-gambar"]["error"] == 0) ? $this->uploadFileFoto($_FILES["file-gambar"], $data["file-gambar"]) : $data["file-gambar"];
@@ -44,7 +51,14 @@ class Profil_model {
                 $this->db->bind("notelp", $notelp);
                 $this->db->bind("jenkel", $jenkel);
                 $this->db->execute();
-                return $this->db->rowCount();
+                if($this->db->rowCount() > 0) {
+                    $dataUser = $this->getDataUserByID($UserID, $role);
+                    $_SESSION["Username"] = $dataUser["NamaLengkap"];
+                    $_SESSION["Foto"] = $dataUser["Foto"];
+                    return 1;
+                } else {
+                    return 0;
+                }
             }
         } catch (PDOException $th) {
             echo $e->getMessage();
@@ -118,7 +132,7 @@ class Profil_model {
     public function getDataUserByID($UserID, $role) {
         try {
             if($role == "user") {
-                $this->db->query("SELECT * FROM siswa WHERE SiswaID = :SiswaID");
+                $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.Jurusan = jurusan.JurusanID AND SiswaID = :SiswaID");
                 $this->db->bind("SiswaID", $UserID);
                 $this->db->execute();
                 return $this->db->single();

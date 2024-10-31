@@ -2,11 +2,10 @@
 
 class Profil extends Controllers {
     public function index() {
-        
 		$data['izinLogout'] = Permission::izinLogout();
 		$data['dataUser'] = $this->model("Dashboard_model")->getDataUserSingle($_SESSION["UserID"], $_SESSION["Role"]);
         $data['dataLengkap'] = [
-            "x" => ($_SESSION["Role"] == "admin") ? count(array_filter($data["dataUser"])) - 6 : count(array_filter($data["dataUser"])) - 6,
+            "x" => ($_SESSION["Role"] == "admin") ? count(array_filter($data["dataUser"])) - 6 : count(array_filter($data["dataUser"])) - 10,
             "n" => ($_SESSION["Role"] == "admin") ? 6 : 9
         ];
         $data["judul"] = "Profil";

@@ -148,4 +148,14 @@ class Register_model {
             echo $e->getMessage();
         }
     }
+
+    public function getJurusan() {
+        try {
+            $this->db->query("SELECT * FROM jurusan");
+            $this->db->execute();
+            return $this->db->resultSet();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }

@@ -10,7 +10,7 @@ class Dashboard_model {
     public function getDataUserSingle($id, $role) {
         if($role == "user") {
             try {
-                $this->db->query("SELECT * FROM siswa WHERE SiswaID = :SiswaID");
+                $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.Jurusan = jurusan.JurusanID AND SiswaID = :SiswaID");
                 $this->db->bind("SiswaID", $id);
                 $this->db->execute();
                 return $this->db->single();
@@ -45,7 +45,7 @@ class Dashboard_model {
 
     public function getDataUserAll() {
         try {
-            $this->db->query("SELECT * FROM siswa");
+            $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.Jurusan = jurusan.JurusanID");
             $this->db->execute();
             return $this->db->resultSet();
         } catch (PDOException $th) {
@@ -55,7 +55,7 @@ class Dashboard_model {
 
     public function getDataUserLaki() {
         try {
-            $this->db->query("SELECT * FROM siswa WHERE Jenkel = :jenkel");
+            $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.Jurusan = jurusan.JurusanID AND Jenkel = :jenkel");
             $this->db->bind("jenkel", "laki-laki");
             $this->db->execute();
             return $this->db->resultSet();
@@ -66,7 +66,7 @@ class Dashboard_model {
 
     public function getDataUserPerempuan() {
         try {
-            $this->db->query("SELECT * FROM siswa WHERE Jenkel = :jenkel");
+            $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.Jurusan = jurusan.JurusanID AND Jenkel = :jenkel");
             $this->db->bind("jenkel", "perempuan");
             $this->db->execute();
             return $this->db->resultSet();

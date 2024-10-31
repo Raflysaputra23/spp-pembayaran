@@ -42,7 +42,7 @@
 				<button type="submit" class="btn-primary text-sm mt-2">Submit</button>
 			</form> -->
 			<?php if($_SESSION["Role"] == "admin") : ?>
-			<form id="form-jurusan" action="<?=Constant::DIRNAME?>kelas" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
+			<form id="form-jurusan" action="<?=Constant::DIRNAME?>kelas/tambahJurusan" method="post" class="my-3 bg-white rounded-md shadow p-4 poppins h-0 overflow-hidden hidden">
 				<div class="grid grid-cols-[1fr] md:grid-cols-[1fr_1fr] gap-5">
 					<div class="form-group my-1">
 						<label for="jurusan">Nama Jurusan</label>
@@ -57,42 +57,17 @@
 			</form>
 			<?php endif; ?>
 			<div class="mt-10 grid grid-cols-[1fr] md:grid-cols-[1fr_1fr_1fr] lg:grid-cols-[1fr_1fr_1fr_1fr] gap-3">
+				<?php foreach ($data["dataJurusan"] as $jurusan) : ?>
 				<div class="card grid grid-cols-[40%_60%] md:grid-cols-[40%_60%] items-start poppins">
-					<div class="rounded-md bg-blue-700 py-4 flex">
+					<div class="rounded-md bg-blue-700 py-4 flex h-[100%]">
 						<i class="bx bx-user m-auto text-3xl text-white"></i>
 					</div>
-					<div class="px-4 flex justify-center items-center flex-col">
-						<h2 class="text-2xl font-bold">30</h2>
-						<p class="text-sm text-slate-700">RPL</p>
+					<div class="px-4 flex justify-center items-center flex-col gap-1">
+						<h2 class="text-2xl font-bold"><?=$jurusan["TotalSiswa"]?></h2>
+						<p class="text-sm text-slate-700 text-center capitalize"><?=$jurusan["NamaJurusan"]?></p>
 					</div>
 				</div>
-				<div class="card grid grid-cols-[40%_60%] md:grid-cols-[40%_60%] items-start poppins">
-					<div class="rounded-md bg-violet-600 py-4 flex">
-						<i class="bx bx-user m-auto text-3xl text-white"></i>
-					</div>
-					<div class="px-4 flex justify-center items-center flex-col">
-						<h2 class="text-2xl font-bold">30</h2>
-						<p class="text-sm text-slate-700">AKT</p>
-					</div>
-				</div>
-				<div class="card grid grid-cols-[40%_60%] md:grid-cols-[40%_60%] items-start poppins">
-					<div class="rounded-md bg-red-600 py-4 flex">
-						<i class="bx bx-user m-auto text-3xl text-white"></i>
-					</div>
-					<div class="px-4 flex justify-center items-center flex-col">
-						<h2 class="text-2xl font-bold">30</h2>
-						<p class="text-sm text-slate-700">TKJ</p>
-					</div>
-				</div>
-				<div class="card grid grid-cols-[40%_60%] md:grid-cols-[40%_60%] items-start poppins">
-					<div class="rounded-md bg-yellow-500 py-4 flex">
-						<i class="bx bx-user m-auto text-3xl text-white"></i>
-					</div>
-					<div class="px-4 flex justify-center items-center flex-col">
-						<h2 class="text-2xl font-bold">30</h2>
-						<p class="text-sm text-slate-700">MM</p>
-					</div>
-				</div>
+				<?php endforeach; ?>
 			</div>
 			<div class="mt-10 w-[100%] md:w-[80%] lg:w-[60%] mx-auto poppins">
 				<canvas id="chartKelas"></canvas>

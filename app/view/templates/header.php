@@ -29,7 +29,7 @@
 <header id="header" class="h-[8vh] mx-auto container">
 	<nav class="bg-primary px-5 flex justify-between h-[100%]" style="border-bottom-right-radius: .8rem; border-bottom-left-radius: .8rem;">
 		<section class="flex items-center gap-3 poppins text-white relative">
-			<img src="<?=Constant::DIRNAME?>img/iconTitle.png" alt="" class="rounded-full w-10 h-10 shadow-md border">
+			<img src="<?=Constant::DIRNAME?>img/<?=((isset($_SESSION["Foto"])) ? $_SESSION["Foto"] : "iconTitle.png")?>" alt="" class="rounded-full w-10 h-10 shadow-md border">
 			<a href="<?=Constant::DIRNAME?>profil"><h3 class="text-sm w-52 leading-[15px] flex items-center gap-1 capitalize"><?=(isset($_SESSION["Username"])) ? $_SESSION["Username"] : "Anonymous" ;?> <i class="bx bx-chevron-down text-lg"></i></h3></a>
 		</section>
 		<section class="flex gap-5 items-center">

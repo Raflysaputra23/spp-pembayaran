@@ -59,20 +59,22 @@
 			</div>
 			<?php if($_SESSION["Role"] != "admin") : ?>
 			<div class="my-4 grid grid-cols-[1fr] md:grid-cols-[1fr_1fr] gap-4">
+			
 				<div class="card bg-slate-150 poppins">
 					<div class="grid grid-cols-[20%_80%] md:grid-cols-[30%_70%] items-start">
 						<div class="rounded-md bg-yellow-500 py-4 flex">
 							<i class="bx bx-money m-auto text-3xl text-white"></i>
 						</div>
 						<div class="px-4">
-							<h2 class="">Pembayaran SPP Anda</h2>
-							<p class="font-bold">Rp. 720.000</p>
-							<p class="text-red-500 font-semibold text-sm">Belum lunas</p>
+							<h2 class="">Pembayaran SPP bulan ini</h2>
+							<p class="font-bold">Rp. <?=(($data["tagihan"][0][$data["tagihan"][1]] == null) ? number_format($data["tagihan"][0]["Harga"],0,'.','.') : "0")?></p>
+							<p class="<?=(($data["tagihan"][0][$data["tagihan"][1]] == null) ? "text-red-500" : "text-green-500")?> font-semibold text-sm"><?=(($data["tagihan"][0][$data["tagihan"][1]] == null) ? "Belum lunas" : "Sudah lunas")?></p>
 						</div>
 					</div>
 					<hr class="w-100 mt-4 mb-2">
 					<a href="<?=Constant::DIRNAME?>spp" class="flex items-center justify-center text-blue-700 group text-md md:text-sm">Lebih banyak <i class="bx bx-chevron-right group-hover:translate-x-[.3rem] transition"></i></a>
 				</div>
+				
 				<div class="card bg-slate-150 poppins">
 					<div class="grid grid-cols-[20%_80%] md:grid-cols-[30%_70%] items-start">
 						<div class="rounded-md bg-green-500 py-4 flex">
@@ -80,8 +82,8 @@
 						</div>
 						<div class="px-4">
 							<h2 class="">SPP Yang Dibayar</h2>
-							<p class="font-bold">Rp. 220.000</p>
-							<p class="text-sm text-red-500">Rp. -420.000</p>
+							<p class="font-bold">Rp. <?=number_format((count(array_filter($data["lunas"], function($bulan) { return $bulan != null;})) - 2) * $data["tagihan"][0]["Harga"],0,'.','.')?></p>
+							<p class="text-sm text-red-500">Rp. -<?=number_format(count(array_filter($data["lunas"], function($bulan) { return $bulan == null;})) * $data["tagihan"][0]["Harga"],0,'.','.')?></p>
 						</div>
 					</div>
 					<hr class="w-100 mt-4 mb-2">

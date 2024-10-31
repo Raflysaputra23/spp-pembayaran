@@ -2,7 +2,7 @@
 			<?php if($data["dataLengkap"]["x"] != $data["dataLengkap"]["n"]) : ?>
 			<div class="alert poppins p-4 bg-yellow-300 rounded-md text-white w-100 relative mb-4 overflow-hidden">
 				<h1 class="text-black flex justify-between"><span>Lengkapi profil anda!</span><span><?=$data["dataLengkap"]["x"]."/".$data["dataLengkap"]["n"];?></span></h1>
-				<div class="load-bar border-2 border-yellow-700 absolute bottom-0 start-0 end-0 w-[<?=($data["dataLengkap"]["x"] / $data["dataLengkap"]["n"]) * 100?>%]"></div>
+				<div class="load-bar border-2 border-yellow-700 absolute bottom-0 start-0 end-0" style="width:<?=($data["dataLengkap"]["x"] / $data["dataLengkap"]["n"]) * 100?>%;"></div>
 			</div>
 			<?php endif; ?>
             <div class="flex items-center justify-between poppins bg-white p-4 rounded-md shadow">
@@ -71,7 +71,7 @@
 						</div>	
 						<div class="form-group mb-4 shrink w-[100%]">
 							<label for="jurusan" class="mb-2 inline-block after:content-['*'] after:ms-1 after:text-red-500">Jurusan</label>
-							<input type="text" name="jurusan" id="jurusan" value="<?=$data["dataUser"]["Jurusan"]?>" class="control-input p-2 px-3 border-slate-300 read-only:bg-slate-200" readonly>	
+							<input type="text" name="jurusan" id="jurusan" value="<?=$data["dataUser"]["NamaJurusan"]?>" class="control-input p-2 px-3 border-slate-300 uppercase read-only:bg-slate-200" readonly>	
 						</div>
 					</div>
 					<?php endif; ?>

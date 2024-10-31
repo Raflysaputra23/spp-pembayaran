@@ -8,8 +8,10 @@ class Dashboard extends Controllers {
 		$data["dataUser"] = [
 			"all" => $this->model("Dashboard_model")->getDataUserByKategori("semua"), 
 			"laki-laki" => $this->model("Dashboard_model")->getDataUserByKategori("laki-laki"),
-			"perempuan" =>	$this->model("Dashboard_model")->getDataUserByKategori("perempuan")
+			"perempuan" =>	$this->model("Dashboard_model")->getDataUserByKategori("perempuan"),
 		];
+		$data["tagihan"] = $this->model("Spp_model")->getTagihan($_SESSION["UserID"]);
+		$data["lunas"] = $this->model("Spp_model")->getLunas($_SESSION["UserID"]);
 		$data['judul'] = "Dashboard";
 		$this->view('templates/header', $data);
 		$this->view('dashboard/index', $data);

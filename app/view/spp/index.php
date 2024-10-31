@@ -9,15 +9,17 @@
 				</div>
 			</div>
 			<div class="grid grid-cols-[1fr] md:grid-cols-[1.2fr_1fr] gap-4 my-3">
-				<div class="bg-white rounded-md grid grid-cols-2 md:grid-cols-3 gap-6">
-					<?php foreach ($data["bulan"] as $bulan => $key) : ?>
+				<form id="form-spp" action="" class="bg-white rounded-md grid grid-cols-2 md:grid-cols-3 gap-6" method="post">
+					<?php foreach ($data["bulan"] as $key => $bulan) : ?>
+					<?php if ($key != "BulanID" && $key != "SiswaID") : ?>
 					<div class="card poppins flex flex-col items-center gap-2 relative">
-						<input type="checkbox" name="pilihan[]" data-harga="175000" value="<?=$key?>" class="absolute start-[5px] top-[5px]">
+						<input type="checkbox" name="pilihan[]" data-harga="<?=$data["hargaSpp"]["Harga"]?>" value="<?=$key?>" class="absolute start-[5px] top-[5px] <?=(($bulan) ? "hidden" : "")?>">
 						<h1 class="font-bold"><?=$key?></h1>
-						<p class="bg-red-500 rounded-md p-1 px-2 text-white" style="font-size: 0.7rem;">Belum lunas</p>
+						<p class="<?=($bulan) ? 'bg-green-500' : 'bg-red-500'?> rounded-md p-1 px-2 text-white" style="font-size: 0.7rem;"><?=(($bulan) ? "Lunas" : "Belum Lunas")?></p>
 					</div>
+					<?php endif; ?>
 					<?php endforeach; ?>
-				</div>
+				</form>
 				<div class="bg-white rounded-md overflow-hidden p-3 relative">
 					<div class="alert-primary poppins text-sm relative">
 						<i class="fa fa-exclamation absolute -rotate-[30deg] text-2xl -top-[12px] -start-[4px]"></i>
@@ -26,16 +28,16 @@
 					<div class="grid grild-cols-1 md:grid-cols-2 gap-4 poppins my-2 mb-20">
 						<div class="flex flex-col items-center gap-1 bg-blue-700 p-2 rounded-md w-[100%] shadow">
 							<p class="text-white font-bold text-md">SPP 1 bulan</p>
-							<p class="text-sm text-white">1000000</p>
+							<p class="text-sm text-white">Rp. <?=number_format($data["hargaSpp"]["Harga"],0,'.','.')?></p>
 						</div>
 						<div class="flex flex-col items-center gap-1 bg-blue-700 p-2 rounded-md w-[100%] shadow">
 							<p class="text-white font-bold text-md">Total Tagihan</p>
-							<p class="text-sm text-white">Rp 1.000.000</p>
+							<p class="text-sm text-white">Rp <?=number_format(($data["hargaSpp"]["Harga"] * count(array_filter($data["bulan"], function($bulan) {return $bulan == null;}))),0,'.','.')?></p>
 						</div>
 					</div>
 					<div class="absolute bottom-0 start-0 end-0 p-2 bg-blue-700 flex items-center gap-3">
 						<p id="total-harga" class="w-[70%] text-center text-lg text-white poppins">Rp. 0</p>
-						<button type="submit" class="btn-primary bg-green-500 w-[30%] shadow disabled" disabled>Bayar</button>
+						<button id="btn-spp" type="submit" class="btn-primary bg-green-500 w-[30%] shadow disabled" disabled>Bayar</button>
 					</div>
 				</div>
 			</div>
