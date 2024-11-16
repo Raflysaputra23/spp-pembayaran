@@ -5,7 +5,7 @@ class Register extends Controllers {
 	public function index() {
 
 		$data['izinLogin'] = Permission::izinLogin();
-		$data['jurusan'] = $this->model("Register_model")->getJurusan();
+		$data['jurusan'] = $this->model("Register_model")->getJurusan('all');
 		$data["judul"] = "Register";
 		$this->view('templates/header', $data);
 		$this->view('register/index', $data);

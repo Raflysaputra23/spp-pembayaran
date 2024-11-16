@@ -18,8 +18,8 @@ class Profil_model {
                 $notelp = htmlspecialchars(stripslashes($data["notelp"]));
                 $jenkel = htmlspecialchars(stripslashes($data["jenkel"]));
 
-                $this->db->query("UPDATE siswa SET Foto = :foto, NamaLengkap = :namaLengkap, Email = :email, TanggalLahir = :tanggalLahir, NoTelp = :notelp, Jenkel = :jenkel WHERE SiswaID = :SiswaID");
-                $this->db->bind("SiswaID", $SiswaID);
+                $this->db->query("UPDATE siswa SET Foto = :foto, NamaLengkap = :namaLengkap, Email = :email, TanggalLahir = :tanggalLahir, NoTelp = :notelp, Jenkel = :jenkel WHERE Nisn = :Nisn");
+                $this->db->bind("Nisn", $SiswaID);
                 $this->db->bind("foto", $foto);
                 $this->db->bind("namaLengkap", $namaLengkap);
                 $this->db->bind("email", $email);
@@ -60,7 +60,7 @@ class Profil_model {
                     return 0;
                 }
             }
-        } catch (PDOException $th) {
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
@@ -118,9 +118,9 @@ class Profil_model {
                 $this->db->execute();
                 return ["status" => "success", "pesan" => "Password berhasil diubah"];
             } else if($role == "user"){
-                $this->db->query("UPDATE siswa SET Password = :passwordBaru WHERE SiswaID = :SiswaID");
+                $this->db->query("UPDATE siswa SET Password = :passwordBaru WHERE Nisn = :Nisn");
                 $this->db->bind("passwordBaru", $passwordBaru);
-                $this->db->bind("SiswaID", $UserID);
+                $this->db->bind("Nisn", $UserID);
                 $this->db->execute();
                 return ["status" => "success", "pesan" => "Password berhasil diubah"];
             }
@@ -132,8 +132,8 @@ class Profil_model {
     public function getDataUserByID($UserID, $role) {
         try {
             if($role == "user") {
-                $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.Jurusan = jurusan.JurusanID AND SiswaID = :SiswaID");
-                $this->db->bind("SiswaID", $UserID);
+                $this->db->query("SELECT * FROM siswa join jurusan WHERE siswa.JurusanID = jurusan.JurusanID AND Nisn = :Nisn");
+                $this->db->bind("Nisn", $UserID);
                 $this->db->execute();
                 return $this->db->single();
             } else if($role == "admin"){
@@ -143,6 +143,24 @@ class Profil_model {
                 return $this->db->single();
             }
         } catch (PDOException $th) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getDataUserSingle($UserID, $Role) {
+        try {
+            if($Role == "user") {
+                $this->db->query("SELECT Nisn, Foto, Nisn, NamaLengkap, Email, TanggalLahir, NoTelp, Jenkel, SingkatanJurusan, Kelas FROM siswa join jurusan on siswa.JurusanID = jurusan.JurusanID WHERE Nisn = :Nisn");
+                $this->db->bind("Nisn", $UserID);
+                $this->db->execute();
+                return $this->db->single();
+            } else if($Role == "admin") {
+                $this->db->query("SELECT UserID, Foto, Username, NamaLengkap, Email, NoTelp, Jenkel FROM users WHERE UserID = :UserID");
+                $this->db->bind("UserID", $UserID);
+                $this->db->execute();
+                return $this->db->single();
+            }
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }

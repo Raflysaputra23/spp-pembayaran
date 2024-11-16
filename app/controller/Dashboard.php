@@ -3,15 +3,14 @@
 
 class Dashboard extends Controllers {
 	public function index() {
-
 		$data['izinLogout'] = Permission::izinLogout();
 		$data["dataUser"] = [
 			"all" => $this->model("Dashboard_model")->getDataUserByKategori("semua"), 
 			"laki-laki" => $this->model("Dashboard_model")->getDataUserByKategori("laki-laki"),
 			"perempuan" =>	$this->model("Dashboard_model")->getDataUserByKategori("perempuan"),
 		];
-		$data["tagihan"] = $this->model("Spp_model")->getTagihan($_SESSION["UserID"]);
-		$data["lunas"] = $this->model("Spp_model")->getLunas($_SESSION["UserID"]);
+		$data["tagihan"] = $this->model("Dashboard_model")->getTagihan($_SESSION["UserID"]);
+		$data["lunas"] = $this->model("Dashboard_model")->getLunas($_SESSION["UserID"]);
 		$data['judul'] = "Dashboard";
 		$this->view('templates/header', $data);
 		$this->view('dashboard/index', $data);

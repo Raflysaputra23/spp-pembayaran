@@ -3,8 +3,10 @@ import CheckValiditas from "http://localhost/spp-pembayaran/js/module/CheckValid
 import NumberFormat from "http://localhost/spp-pembayaran/js/module/NumberFormat.js";
 import ModalBox from "http://localhost/spp-pembayaran/js/module/ModalBox.js";
 import TableSiswa from "http://localhost/spp-pembayaran/js/module/TableSiswa.js";
-import SwetAlertMixin from "http://localhost/spp-pembayaran/js/module/SwetAlertMixin.js";
-import { aside, pathUrl, btnSetting, btnModalBox} from "http://localhost/spp-pembayaran/js/module/tags.js";
+import PlateCardSiswa from "http://localhost/spp-pembayaran/js/module/PlateCardSiswa.js";
+import PlateCardHistory from "http://localhost/spp-pembayaran/js/module/PlateCardHistory.js";
+import { SwetAlertInfo, SwetAlertConfirm } from "http://localhost/spp-pembayaran/js/module/SwetAlertMixin.js";
+import { aside, pathUrl, btnSetting, btnModalBox, btnMode, html } from "http://localhost/spp-pembayaran/js/module/tags.js";
 import { ChartBar } from "http://localhost/spp-pembayaran/js/module/Chart.js";
 
 const dirname = "http://localhost/spp-pembayaran/";
@@ -54,6 +56,32 @@ if (pathUrl != null) {
 btnSetting.addEventListener('click', function() {
   Dropdownbox(this.nextElementSibling);
 });
+
+if(localStorage.getItem('Mode') == 'dark') {
+    btnMode.classList.replace('light','dark');
+    btnMode.querySelector('.bxs-moon').classList.replace('-translate-y-8','-translate-y-0');
+    btnMode.querySelector('.bxs-sun').classList.replace('-translate-y-8','-translate-y-0');
+} else {
+    btnMode.classList.replace('dark','light');
+    btnMode.querySelector('.bxs-moon').classList.replace('-translate-y-0','-translate-y-8');
+    btnMode.querySelector('.bxs-sun').classList.replace('-translate-y-0','-translate-y-8');
+}
+
+btnMode.addEventListener('click', function() {
+  if(this.classList.contains('light')) {
+    this.classList.replace('light','dark');
+    this.querySelector('.bxs-moon').classList.replace('-translate-y-8','-translate-y-0');
+    this.querySelector('.bxs-sun').classList.replace('-translate-y-8','-translate-y-0');
+    localStorage.setItem('Mode', 'dark');
+    html.classList.add('dark');
+  } else {
+    this.classList.replace('dark','light');
+    this.querySelector('.bxs-moon').classList.replace('-translate-y-0','-translate-y-8');
+    this.querySelector('.bxs-sun').classList.replace('-translate-y-0','-translate-y-8');
+    html.classList.remove('dark');
+    localStorage.setItem('Mode', 'light');
+  }
+});
 // END SCRIPT MAIN
 
 // SCRIPT DASHBOARD
@@ -63,18 +91,15 @@ btnSetting.addEventListener('click', function() {
 // SCRIPT KELAS
 if (urlnow[2] == "kelas") {
   const chartKelas = document.getElementById('chartKelas');
-  ChartBar(chartKelas, ["RPL","AKT","TKJ","MM"], [30,20,40,20],'Jurusan');
+  document.addEventListener('DOMContentLoaded', async (e) => {
+    let response = await fetch(`${dirname}kelas/getDataJurusan`);
+    response = await response.json();
+    ChartBar(chartKelas, response.map((item) => item.SingkatanJurusan), response.map((item) => item.TotalSiswa),'Jurusan');
+  });
 
   const formJurusan = document.getElementById('form-jurusan');
-  // const formKelas = document.getElementById('form-kelas');
   const btnJurusan = document.getElementById('btn-jurusan');
-  // const btnKelas = document.getElementById('btn-kelas');
 
-
-  // btnKelas.addEventListener('click', function(element) {
-  //   element.preventDefault();
-  //   Dropdownbox(formKelas)
-  // });
   if(btnJurusan) {
     btnJurusan.addEventListener('click', function(element) {
        element.preventDefault();  
@@ -92,6 +117,7 @@ if (urlnow[2] == "siswa") {
   const btnSortNisn = document.getElementById('btn-sort-nisn');
   const btnSortUsername = document.getElementById('btn-sort-username');
   const formSearchSiswa = document.getElementById('form-search-siswa');
+  const btnHapus = document.querySelectorAll('.btn-hapus');
 
   btnDropdownShow.addEventListener('click', function() {
    Dropdownbox(this.nextElementSibling);
@@ -101,9 +127,10 @@ if (urlnow[2] == "siswa") {
     a.addEventListener('click', async function(e) {
       e.preventDefault();
         let data = this.dataset.sort; 
+        let role = this.dataset.role;
         let response = await fetch(`${dirname}siswa/getDataSort`, { method: "POST", body: JSON.stringify({data})});
         response = await response.json();
-        TableSiswa(response);
+        TableSiswa(response, role);
     });
   });
 
@@ -113,6 +140,7 @@ if (urlnow[2] == "siswa") {
     e.preventDefault();
     let dataSort = this.dataset.sort;
     let dataColumn = this.dataset.column;
+    let role = this.dataset.role;
     if(dataSort == "ASC") {
       this.querySelector('i').classList.replace('rotate-0','rotate-180');
       this.dataset.sort = "DESC";
@@ -124,13 +152,15 @@ if (urlnow[2] == "siswa") {
     let $data = { order: dataSort, column: dataColumn };
     let response = await fetch(`${dirname}siswa/getDataOrder`, { method: "POST", body: JSON.stringify($data)});
     response = await response.json();
-    TableSiswa(response);
+    TableSiswa(response, role);
   });
 
   btnSortNisn.addEventListener('click', async function(e) {
     e.preventDefault();
     let dataSort = this.dataset.sort;
     let dataColumn = this.dataset.column;
+    let role = this.dataset.role;
+
     if(dataSort == "ASC") {
       this.querySelector('i').classList.replace('rotate-0','rotate-180');
       this.dataset.sort = "DESC";
@@ -142,13 +172,14 @@ if (urlnow[2] == "siswa") {
     let $data = { order: dataSort, column: dataColumn };
     let response = await fetch(`${dirname}siswa/getDataOrder`, { method: "POST", body: JSON.stringify($data)});
     response = await response.json();
-    TableSiswa(response);
+    TableSiswa(response, role);
   });
 
   btnSortUsername.addEventListener('click', async function(e) {
     e.preventDefault();
     let dataSort = this.dataset.sort;
     let dataColumn = this.dataset.column;
+    let role = this.dataset.role;
     if(dataSort == "ASC") {
       this.querySelector('i').classList.replace('rotate-0','rotate-180');
       this.dataset.sort = "DESC";
@@ -160,15 +191,35 @@ if (urlnow[2] == "siswa") {
     let $data = { order: dataSort, column: dataColumn };
     let response = await fetch(`${dirname}siswa/getDataOrder`, { method: "POST", body: JSON.stringify($data)});
     response = await response.json();
-    TableSiswa(response);
+    TableSiswa(response, role);
   });
 
   formSearchSiswa.addEventListener('submit', async function(e) {
     e.preventDefault();
     const data = new FormData(this);
+    let role = this.dataset.role;
     let response = await fetch(`${dirname}siswa/searchData`, { method: "POST", body: data});
     response = await response.json();
-    TableSiswa(response);
+    TableSiswa(response, role);
+  });
+
+  btnHapus.forEach((btn) => {
+    btn.addEventListener('click', async function(e) {
+      e.preventDefault();
+
+      let response = await SwetAlertConfirm('warning','Yakin ingin menghapus siswa ini?','Ya, Hapus!');
+      if(response.isConfirmed) {
+        let response = await fetch(`${dirname}siswa/hapusSiswa`, { method: "POST", body: JSON.stringify({SiswaID: this.dataset.siswaId})});
+        response = await response.json();
+        if(response) {
+          SwetAlertInfo('success','Siswa Berhasil','<span class="text-green-500 poppins">Berhasil</span>');
+          setTimeout(() => {window.location.reload()}, 2000);
+        } else {
+          SwetAlertInfo('error','Siswa Gagal Dihapus','<span class="text-red-500 poppins">Gagal</span>');
+          setTimeout(() => {window.location.reload()}, 2000);
+        }
+      }
+    });
   });
 
 }
@@ -263,11 +314,14 @@ if (urlnow[2] == "register") {
 
 // SCRIPT SPP
 if(urlnow[2] == "spp") {
-  const inputs = document.querySelectorAll('input');
+  // const inputs = document.querySelectorAll('input');
   const formSpp = document.getElementById('form-spp');
   const btnSpp = document.getElementById('btn-spp');
+  const inputSpp = document.querySelectorAll('input[name="pilihan[]"]');
+  const formSearch = document.getElementById('form-search');
+
   let totalHarga = 0;
-  inputs.forEach((input) => {
+  inputSpp.forEach((input) => {
     input.addEventListener('change', function() {
       if(this.checked) {
         totalHarga += parseInt(this.dataset.harga);
@@ -287,19 +341,65 @@ if(urlnow[2] == "spp") {
     });
   });
 
-  btnSpp.addEventListener('click', async function(e) {
-    e.preventDefault();
-    const data = new FormData(formSpp);
-    let response = await fetch(`${dirname}spp/buySpp`, { method: "POST", body: data});
-    response = await response.json();
-    if(response) {
-      SwetAlertMixin('success','Pembayaran SPP berhasil','<span class="text-green-500 poppins">Berhasil</span>');
-      setTimeout(() => {window.location.reload()}, 2000);
-    } else {
-      SwetAlertMixin('error','Pembayaran SPP gagal','<span class="text-red-500 poppins">Berhasil</span>');
-      setTimeout(() => {window.location.reload()}, 2000);
-    }
-  });
+
+  const data = { BulanID: 0, TotalHarga: 0, Bulan: [], NamaLengkap: '', Email: '', Phone: 0,};
+  if(btnSpp != null) {
+    btnSpp.addEventListener('click', async function(e) {
+      e.preventDefault();
+      inputSpp.forEach((input) => {
+        if(input.checked) {
+          data.TotalHarga += parseInt(input.dataset.harga);
+          data.SiswaID = input.dataset.siswaId;
+          data.Bulan.push({
+            id: input.dataset.bulanId,
+            price: parseInt(input.dataset.harga),
+            quantity: 1,
+            name: input.value,
+          });
+          data.NamaLengkap = input.dataset.nama;
+          data.Email = input.dataset.email;
+          data.Phone = input.dataset.notelp;
+        }
+      });
+
+      if(!data.Email || !data.Phone) {
+        SwetAlertInfo ('warning','Anda belum mengisi email dan nomor telepon','Peringatan!');
+      } else {
+        let token = await fetch(`${dirname}vendor/midtrans.php`, { method: "POST", body: JSON.stringify(data)});
+        token = await token.json();
+        window.snap.pay(token, {
+          onSuccess: async function(result){
+            data.TranksaksiID = result.order_id;
+            data.MetodePay = result.payment_type;
+            data.CreateAt = result.transaction_time;
+            fetch(`${dirname}spp/setTranksaksi`, { method: "POST", body: JSON.stringify(data)});
+            window.location.reload();
+          },
+          onPending: function(result){
+            alert("wating your payment!"); console.log(result);
+          },
+          onError: function(result){
+            alert("payment failed!"); 
+            console.log(result);
+          },
+          onClose: function(){
+            alert('you closed the popup without finishing the payment');
+          }
+        });
+      }
+    });
+  }
+
+  if(formSearch != null) {
+    formSearch.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      let response = await fetch(`${dirname}spp/getRekapSiswa`, { method: 'POST', body: data });
+      response = await response.json();
+      PlateCardSiswa(response, dirname);
+    });
+  }
+
 }
 // END SCRIPT SPP
 
@@ -337,6 +437,34 @@ if(urlnow[2] == "profil") {
   });
 }
 // END SCRIPT PROFIL
+
+// START SCRIPT HISTORY
+if(urlnow[2] == "history") {
+  const btnSort = document.getElementById("btn-sort");
+  btnSort.addEventListener("click", async function(e) {
+    e.preventDefault();
+    this.dataset.sort = (this.dataset.sort == "ASC") ? "DESC" : "ASC";
+    let data = { Order: this.dataset.sort, SiswaID: this.dataset.siswaId }
+    this.querySelector("i").classList.replace((data == "ASC") ? "rotate-0" : "rotate-180", (data == "DESC") ? "rotate-0" : "rotate-180");
+    let response = await fetch(`${dirname}history/getDataOrder`, { method: "POST", body: JSON.stringify(data)});
+    response = await response.json();
+    PlateCardHistory(response, dirname);
+  })
+};
+// END SCRIPT HISTORY
+
+// START SCRIPT TRANKSAKSI
+if(urlnow[2] == "tranksaksi") {
+  const formSearch = document.getElementById("form-search");
+  formSearch.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const data = new FormData(this);
+    let response = await fetch(`${dirname}tranksaksi/getHistory`, { method: "POST", body: data });
+    response = await response.json();
+    PlateCardHistory(response, dirname);
+  });
+}
+// END SCRIPT TRANKSAKSI
 
 
 

@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	::-webkit-scrollbar {
+	    @apply w-2 h-2;
+	}
+
+	::-webkit-scrollbar-thumb {
+		 @apply bg-blue-700 rounded-md;
+	}
+
+    .hover-scroll:hover::-webkit-scrollbar {
+		@apply block;
+	}
+
+	.hidden-scroll::-webkit-scrollbar {
+		@apply hidden;
+	}
+
+	.btn-primary {
+		@apply py-2 px-3 rounded-md shadow-sm bg-blue-700 text-white flex justify-center items-center gap-2;
+	    font-family:'Poppins', sans-serif;
+	}
+
+	.btn-danger {
+		@apply py-2 px-3 rounded-md shadow-sm bg-red-500 text-white flex justify-center items-center gap-2;
+		font-family:'Poppins', sans-serif;
+		}
+
+	.btn-outline-primary {
+		@apply py-2 px-3 rounded-md shadow-sm border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white transition;
+		font-family:'Poppins',sans-serif;
+	}
+
+	.card {
+		@apply shadow-lg rounded-md p-3;
+	}
+
+	.control-input {
+		@apply py-1 px-2 rounded-md bg-transparent w-[100%] border outline-0;
+	}
+
+	.alert-primary {
+		@apply p-5 rounded-md border border-l-4 border-t-0 border-b-0 border-r-0 border-blue-700 bg-cyan-200;
+	}
+
+	.focus-input:focus ~ label,
+	.focus-input:valid ~ label {
+		@apply -translate-y-[1.6rem] bg-blue-700 text-white px-2 p-1 rounded-md text-[.9rem];
+	}
+
+	.check-value ~ label{
+		@apply -translate-y-[1.6rem] bg-blue-700 text-white px-2 p-1 rounded-md text-[.9rem];
+	}
+
+}
+
+@layer utilities {
+	.shadow-light {
+		box-shadow: -1px 1px 7px -2px rgba(255,255,255, 0.3);
+	}
+
+	.poppins {
+		font-family:'Poppins', sans-serif;
+	}
+	.tillana {
+		font-family:'Tillana', sans-serif;
+	}
+	.bg-primary {
+		@apply bg-blue-700 dark:bg-slate-800;
+	}
+	
+	.bg-gray {
+		@apply bg-gray-100;
+	}
+	.text-shadow {
+		text-shadow: -1px 1px 2px #000;
+	}
+	.active {
+		@apply bg-blue-700 dark:bg-slate-900 text-white;
+			}
+	.disabled {
+		@apply disabled:opacity-75 disabled:cursor-not-allowed dark:bg-slate-800;
+	}
+}

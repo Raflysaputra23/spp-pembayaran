@@ -4,7 +4,7 @@
 class Kelas extends Controllers {
 	public function index() {
 		$data['izinLogout'] = Permission::izinLogout();
-		$data["dataJurusan"] = $this->model("Kelas_model")->getJurusan();
+		$data["dataJurusan"] = $this->model("Kelas_model")->getTotalJurusan($this->model("Kelas_model")->getNamaJurusan());
 		$data['judul'] = "Kelas";
 		$this->view('templates/header', $data);
 		$this->view('kelas/index', $data);
@@ -22,5 +22,10 @@ class Kelas extends Controllers {
 			header("location:".Constant::DIRNAME.'kelas');
 			exit;
 		}
+
+	}
+
+	public function getDataJurusan() {
+		echo json_encode($this->model("Kelas_model")->getTotalJurusan($this->model("Kelas_model")->getNamaJurusan()));
 	}
 }

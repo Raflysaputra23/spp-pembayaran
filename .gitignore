@@ -2,9 +2,10 @@
 img/*.jpg
 img/*.png
 img/*.jpeg
+tools/*
 *.json
 node_modules/*
-css/*
+.htaccess
 
 
 

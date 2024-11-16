@@ -2,12 +2,9 @@
 
 class Profil extends Controllers {
     public function index() {
+        
 		$data['izinLogout'] = Permission::izinLogout();
-		$data['dataUser'] = $this->model("Dashboard_model")->getDataUserSingle($_SESSION["UserID"], $_SESSION["Role"]);
-        $data['dataLengkap'] = [
-            "x" => ($_SESSION["Role"] == "admin") ? count(array_filter($data["dataUser"])) - 6 : count(array_filter($data["dataUser"])) - 10,
-            "n" => ($_SESSION["Role"] == "admin") ? 6 : 9
-        ];
+		$data['dataUser'] = $this->model("Profil_model")->getDataUserSingle($_SESSION["UserID"], $_SESSION["Role"]);
         $data["judul"] = "Profil";
         $this->view("templates/header", $data);
         $this->view("profil/index", $data);
@@ -16,7 +13,7 @@ class Profil extends Controllers {
     }
 
     public function setProfil($role) {
-        if ($this->model("Profil_model")->setProfil($_POST, $role[0]) > 0) {
+        if ($this->model("Profil_model")->setProfil($_POST, $role) > 0) {
             Flasher::setFlash('<p class="poppins text-sm">Data berhasil diubah!</p>', "success");
 			header("location:".Constant::DIRNAME.'profil');
 			exit();

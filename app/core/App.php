@@ -14,7 +14,7 @@ class App {
 			$this->class = ucfirst($url[0]);
 			unset($url[0]);
 		}
-
+		
 		require_once $dir.$this->class.'.php';
 		$this->class = new $this->class();
 
@@ -29,7 +29,7 @@ class App {
 			$this->params = array_values($url);
 		}
 
-		call_user_func([$this->class, $this->method], $this->params);
+		call_user_func_array([$this->class, $this->method], $this->params);
 		
 
 	}

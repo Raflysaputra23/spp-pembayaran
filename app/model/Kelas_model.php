@@ -7,10 +7,11 @@ class Kelas_model {
     }
 
     public function tambahJurusan($data) {
-        $namaJurusan = $data["namaJurusan"];
-        $hargaJurusan = $data["hargaSpp"];
-        $id = $this->genereateToken($namaJurusan);
-        $dataJuruan = $this->getJurusan();
+        $namaJurusan = htmlspecialchars(strtolower($data["namaJurusan"]));
+        $singkatanJurusan = htmlspecialchars(strtoupper($data["singkatanJurusan"]));
+        $hargaJurusan = htmlspecialchars(strtolower($data["hargaSpp"]));
+        $JurusanID = $this->genereateToken($namaJurusan);
+        $dataJuruan = $this->getNamaJurusan();
         foreach($dataJuruan as $data) {
             if($namaJurusan == $data["NamaJurusan"]) {
                 Flasher::setFlash('<p class="poppins text-sm">Jurusan sudah ada!</p>', "error");
@@ -19,22 +20,14 @@ class Kelas_model {
             }
         }
         try {
-            $this->db->beginTransaction();
-
-            $this->db->query('INSERT INTO jurusan (JurusanID, NamaJurusan) VALUES(:idJurusan, :namaJurusan)');
-            $this->db->bind('idJurusan', $id);
+            $this->db->query('INSERT INTO jurusan (JurusanID, NamaJurusan, singkatanJurusan, HargaJurusan) VALUES(:JurusanID, :namaJurusan, :singkatanJurusan, :hargaJurusan)');
+            $this->db->bind('JurusanID', $JurusanID);
             $this->db->bind('namaJurusan', $namaJurusan);
-            $this->db->execute();
-    
-            $this->db->query('INSERT INTO spp (JurusanID, Harga) VALUES(:idJurusan, :hargaJurusan)');
-            $this->db->bind('idJurusan', $id);
+            $this->db->bind('singkatanJurusan', $singkatanJurusan);
             $this->db->bind('hargaJurusan', $hargaJurusan);
             $this->db->execute();
-
-            $this->db->commit();
             return $this->db->rowCount();
         } catch (PDOException $e) {
-            $this->db->rollBack();
             echo $e->getMessage();
         }
     }
@@ -48,9 +41,23 @@ class Kelas_model {
         return rand(1, 1000).$namaJurusan;
     }
 
-    public function getJurusan() {
+    public function getTotalJurusan($NamaJurusan) {
         try {
-            $this->db->query("SELECT jurusan.NamaJurusan, COUNT(siswa.SiswaID) AS TotalSiswa FROM jurusan LEFT JOIN siswa ON jurusan.JurusanID = siswa.Jurusan GROUP BY jurusan.NamaJurusan;");
+            $this->db->query("SELECT jurusan.NamaJurusan, COUNT(siswa.Nisn) AS TotalSiswa FROM jurusan LEFT JOIN siswa ON jurusan.JurusanID = siswa.JurusanID GROUP BY jurusan.NamaJurusan;");
+            $this->db->execute();
+            $totalSiswa = $this->db->resultSet();
+            foreach($NamaJurusan as $key => $data) {
+                $NamaJurusan[$key]["TotalSiswa"] = $totalSiswa[$key]["TotalSiswa"];
+            }
+            return $NamaJurusan;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function getNamaJurusan() {
+        try {
+            $this->db->query("SELECT SingkatanJurusan FROM jurusan");
             $this->db->execute();
             return $this->db->resultSet();
         } catch (PDOException $e) {
