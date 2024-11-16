@@ -104,41 +104,43 @@ class Register_model {
         foreach(fgetcsv($handle,0,';') as $key) {
             $header[] = htmlspecialchars(stripslashes(strtolower(str_replace(" ", "", $key)))); 
         }
-        while($data = fgetcsv($handle,0,';')) {
-            $row = array_combine($header, $data);
-            $password = password_hash($row["nisn"], PASSWORD_DEFAULT);
-            if($this->getDataUserSingle($row["nisn"], "siswa") != false) {
-                Flasher::setFlash('<p class="poppins text-sm">Salah satu siswa mempunyai nisn yang sama!</p>',"error");
-                header('location: '.Constant::DIRNAME.'register');
-                exit();
-            }
-            // CEK JURUSAN
-            $data = $this->getJurusan("cek",strtoupper($row["jurusan"]));
-            if($data != false) {
-                $row["jurusan"] = $data["JurusanID"];
-            } else {
-                Flasher::setFlash('<p class="poppins text-sm">Jurusan tidak ditemukan!</p>',"error");
-                header('location: '.Constant::DIRNAME.'register');
-                exit();
-            }
-           
-            try {
-                $this->db->query('INSERT INTO siswa (Nisn, NamaLengkap, Password, Jenkel, Kelas, JurusanID, TanggalLahir) VALUES (:nisn ,:namaLengkap ,:password ,:jenkel ,:kelas ,:jurusan , :tanggalLahir)');
-                $this->db->bind('nisn', htmlspecialchars(stripslashes($row["nisn"])));
-                $this->db->bind('namaLengkap', htmlspecialchars(stripslashes($row["namalengkap"])));
-                $this->db->bind('password', htmlspecialchars($password));
-                $this->db->bind('jenkel', htmlspecialchars(strtolower($row["jeniskelamin"])));
-                $this->db->bind('kelas', htmlspecialchars($row["kelas"]));
-                $this->db->bind('jurusan', htmlspecialchars(stripslashes($row["jurusan"])));
-                $this->db->bind('tanggalLahir', htmlspecialchars(date("Y-m-d", strtotime($row["tanggallahir"]))));
-                $this->db->execute();
-            } catch (PDOException $e) {
-                echo "Error : ". $e->getMessage();
-            }
+        try {
+            $this->db->beginTransaction();
+                while($data = fgetcsv($handle,0,';')) {
+                    $row = array_combine($header, $data);
+                    $password = password_hash($row["nisn"], PASSWORD_DEFAULT);
+                    if($this->getDataUserSingle($row["nisn"], "siswa") != false) {
+                        Flasher::setFlash('<p class="poppins text-sm">Salah satu siswa mempunyai nisn yang sama!</p>',"error");
+                        header('location: '.Constant::DIRNAME.'register');
+                        exit();
+                    }
+                    // CEK JURUSAN
+                    $data = $this->getJurusan("cek",strtoupper($row["jurusan"]));
+                    if($data != false) {
+                        $row["jurusan"] = $data["JurusanID"];
+                    } else {
+                        Flasher::setFlash('<p class="poppins text-sm">Jurusan tidak ditemukan!</p>',"error");
+                        header('location: '.Constant::DIRNAME.'register');
+                        exit();
+                    }
+                
+                    $this->db->query('INSERT INTO siswa (Nisn, NamaLengkap, Password, Jenkel, Kelas, JurusanID, TanggalLahir) VALUES (:nisn ,:namaLengkap ,:password ,:jenkel ,:kelas ,:jurusan , :tanggalLahir)');
+                    $this->db->bind('nisn', htmlspecialchars(stripslashes($row["nisn"])));
+                    $this->db->bind('namaLengkap', htmlspecialchars(stripslashes($row["namalengkap"])));
+                    $this->db->bind('password', htmlspecialchars($password));
+                    $this->db->bind('jenkel', htmlspecialchars(strtolower($row["jeniskelamin"])));
+                    $this->db->bind('kelas', htmlspecialchars($row["kelas"]));
+                    $this->db->bind('jurusan', htmlspecialchars(stripslashes($row["jurusan"])));
+                    $this->db->bind('tanggalLahir', htmlspecialchars(date("Y-m-d", strtotime($row["tanggallahir"]))));
+                    $this->db->execute();
+                }
+            $this->db->commit();
+            return $this->db->rowCount();
+            fclose($handle);
+        } catch (PDOException $e) {
+            $this->db->rollBack();
+            echo $e->getMessage();
         }
-
-        return $this->db->rowCount();
-        fclose($handle);
     }
 
     public function getDataUserSingle($data, $table) {

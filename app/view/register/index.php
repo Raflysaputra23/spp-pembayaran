@@ -19,7 +19,7 @@
 					<i class="fa fa-user absolute bottom-[.6rem] end-[.7rem] text-xl"></i>
 				</div>
 				<div class="form-group dark:text-slate-200 mt-6 poppins relative">
-					<select name="jenkel" id="jenkel" class="control-input p-3 pb-2 focus-input" required>
+					<select name="jenkel" id="jenkel" class="control-input p-3 pb-2 focus-input dark:bg-slate-800" required>
 						<option value="" readonly></option>
 						<option value="laki-laki">Laki-Laki</option>
 						<option value="perempuan">Perempuan</option>
@@ -29,7 +29,7 @@
 				</div>
 				<div class="flex items-center gap-2">
 					<div class="form-group dark:text-slate-200 mt-6 poppins relative w-[100%]">
-						<select name="kelas" id="kelas" class="control-input p-3 pb-2 focus-input" required>
+						<select name="kelas" id="kelas" class="control-input p-3 pb-2 focus-input dark:bg-slate-800" required>
 							<option value="" readonly></option>
 							<option value="12">12</option>
 							<option value="10">10</option>
@@ -38,7 +38,7 @@
 						<p class="absolute end-[.1rem] text-sm -bottom-[1.3rem]"></p>
 					</div>
 					<div class="form-group dark:text-slate-200 mt-6 poppins relative w-[100%]">
-						<select name="jurusan" id="jurusan" class="control-input p-3 pb-2 focus-input capitalize" required>
+						<select name="jurusan" id="jurusan" class="control-input p-3 pb-2 focus-input capitalize dark:bg-slate-800" required>
 							<option value="" readonly></option>
 							<?php foreach ($data['jurusan'] as $jurusan) : ?>
 								<option value="<?=$jurusan['JurusanID']?>"><?=$jurusan['NamaJurusan']?></option>
@@ -64,7 +64,7 @@
 					<a href="<?=Constant::DIRNAME?>login" class="btn-primary w-[100%]">Login</a>
 				</div>
 			</form>
-			<form id="Otomatis-form" action="<?=Constant::DIRNAME?>register/registerAllUser" method="post" enctype="multipart/form-data" class="container max-w-[400px] rounded-md shadow-lg m-auto p-4 hidden dark:bg-slate-800">
+			<form id="Otomatis-form" action="<?=Constant::DIRNAME?>register/registerAllUser" method="post" enctype="multipart/form-data" class="container max-w-[400px] rounded-md shadow-lg m-auto p-4 hidden dark:text-slate-800 dark:bg-slate-800">
 				<h1 class="text-center text-4xl tillana text-shadow text-red-500 mb-10">Register</h1>
 				<div class="form-group dark:text-slate-200 mt-6 poppins relative">
 					<input type="file" name="file-csv" id="file-csv" class="control-input p-3 pb-2 pe-10 check-value" required>

@@ -46,6 +46,6 @@
 				<?php endforeach; ?>
 			</div>
 			<?php else: ?>
-			<h1 class="text-center text-xl lg:text-2xl my-6 poppins">Tidak Ada History <i class="bx bx-search"></i></h1>
+			<h1 class="text-center text-xl lg:text-2xl my-6 poppins dark:text-slate-200">Tidak Ada History <i class="bx bx-search"></i></h1>
 			<?php endif; ?>
         </section>	

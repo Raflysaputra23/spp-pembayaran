@@ -1,7 +1,7 @@
 		<section class="p-5 md:p-10 lg:p-15 overflow-y-auto overflow-x-hidden">
 			<?php if(in_array(Null,$data["dataUser"])) : ?>
-			<div class="alert poppins p-4 bg-yellow-300 rounded-md text-white w-100 relative mb-4 overflow-hidden dark:bg-slate-800">
-				<h1 class="text-black flex justify-between"><span>Lengkapi profil anda!</span><span><?=count(array_filter($data["dataUser"]))?>/<?=(count($data["dataUser"]))?></span></h1>
+			<div class="alert poppins p-4 bg-yellow-300 rounded-md text-white w-100 relative mb-4 overflow-hidden dark:bg-slate-800 dark:text-slate-200 text-black">
+				<h1 class="flex justify-between"><span>Lengkapi profil anda!</span><span><?=count(array_filter($data["dataUser"]))?>/<?=(count($data["dataUser"]))?></span></h1>
 				<div class="load-bar border-2 border-yellow-700 absolute bottom-0 start-0 end-0" style="width:<?=round((count(array_filter($data["dataUser"])) / count($data["dataUser"])) * 100)?>%;"></div>
 			</div>
 			<?php endif; ?>
@@ -24,13 +24,13 @@
 					</div>
 				</div>
 				<div class="poppins">
-					<div class="form-group mb-4 dark:text-slate-200">
+					<div class="form-group mb-4 dark:text-slate-200 ">
 						<?php if($_SESSION["Role"] == "user") : ?>
 							<label for="nisn" class="mb-2 inline-block after:content-['*'] after:ms-1 after:text-red-500">NISN</label>
-							<input type="number" name="nisn" value="<?=$data["dataUser"]["Nisn"]?>" max="10" class="control-input p-2 px-3 border-slate-300 read-only:bg-slate-200" readonly>
+							<input type="number" name="nisn" value="<?=$data["dataUser"]["Nisn"]?>" max="10" class="control-input p-2 px-3 border-slate-300 read-only:bg-slate-200 dark:text-slate-800" readonly>
 						<?php else: ?>
 							<label for="nisn" class="mb-2 inline-block after:content-['*'] after:ms-1 after:text-red-500">Username</label>
-							<input type="text" name="username" value="<?=$data["dataUser"]["Username"]?>" max="10" class="control-input p-2 px-3 border-slate-300 read-only:bg-slate-200" readonly>
+							<input type="text" name="username" value="<?=$data["dataUser"]["Username"]?>" max="10" class="control-input p-2 px-3 border-slate-300 read-only:bg-slate-200 dark:text-slate-800" readonly>
 						<?php endif; ?>
 					</div>
 					<div class="form-group mb-4 dark:text-slate-200">	
@@ -67,11 +67,11 @@
 					<div class="flex gap-4 items-center dark:text-slate-200">
 						<div class="form-group mb-4 shrink w-[100%]">
 							<label for="kelas" class="mb-2 inline-block after:content-['*'] after:ms-1 after:text-red-500">Kelas</label>
-							<input type="text" name="kelas" id="kelas" value="<?=$data["dataUser"]["Kelas"]?>" class="control-input p-2 px-3 border-slate-300 read-only:bg-slate-200" readonly>
+							<input type="text" name="kelas" id="kelas" value="<?=$data["dataUser"]["Kelas"]?>" class="control-input p-2 px-3 border-slate-300 read-only:bg-slate-200 dark:text-slate-800" readonly>
 						</div>	
 						<div class="form-group mb-4 shrink w-[100%] dark:text-slate-200">
 							<label for="jurusan" class="mb-2 inline-block after:content-['*'] after:ms-1 after:text-red-500">Jurusan</label>
-							<input type="text" name="jurusan" id="jurusan" value="<?=$data["dataUser"]["SingkatanJurusan"]?>" class="control-input p-2 px-3 border-slate-300 uppercase read-only:bg-slate-200" readonly>	
+							<input type="text" name="jurusan" id="jurusan" value="<?=$data["dataUser"]["SingkatanJurusan"]?>" class="control-input p-2 px-3 border-slate-300 uppercase read-only:bg-slate-200 dark:text-slate-800" readonly>	
 						</div>
 					</div>
 					<?php endif; ?>
