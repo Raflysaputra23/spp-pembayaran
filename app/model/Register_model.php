@@ -101,12 +101,12 @@ class Register_model {
         
         // AMBIL DATA DI FILE
         $handle = fopen($pathFile, 'r');
-        foreach(fgetcsv($handle,0,';') as $key) {
+        foreach(fgetcsv($handle,0,',') as $key) {
             $header[] = htmlspecialchars(stripslashes(strtolower(str_replace(" ", "", $key)))); 
         }
         try {
             $this->db->beginTransaction();
-                while($data = fgetcsv($handle,0,';')) {
+                while($data = fgetcsv($handle,0,',')) {
                     $row = array_combine($header, $data);
                     $password = password_hash($row["nisn"], PASSWORD_DEFAULT);
                     if($this->getDataUserSingle($row["nisn"], "siswa") != false) {
@@ -128,7 +128,7 @@ class Register_model {
                     $this->db->bind('nisn', htmlspecialchars(stripslashes($row["nisn"])));
                     $this->db->bind('namaLengkap', htmlspecialchars(stripslashes($row["namalengkap"])));
                     $this->db->bind('password', htmlspecialchars($password));
-                    $this->db->bind('jenkel', htmlspecialchars(strtolower($row["jeniskelamin"])));
+                    $this->db->bind('jenkel', htmlspecialchars(strtolower($row["jenkel"] || $row["jeniskelamin"])));
                     $this->db->bind('kelas', htmlspecialchars($row["kelas"]));
                     $this->db->bind('jurusan', htmlspecialchars(stripslashes($row["jurusan"])));
                     $this->db->bind('tanggalLahir', htmlspecialchars(date("Y-m-d", strtotime($row["tanggallahir"]))));

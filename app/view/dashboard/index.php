@@ -50,7 +50,7 @@
 						</div>
 						<div class="px-4">
 							<h2 class="text-sm text-slate-600 dark:text-slate-300">History</h2>
-							<p class="font-bold">60</p>
+							<p class="font-bold"><?= count($data["history"])?></p>
 						</div>
 					</div>
 					<hr class="w-100 mt-4 mb-2">

@@ -11,6 +11,7 @@ class Dashboard extends Controllers {
 		];
 		$data["tagihan"] = $this->model("Dashboard_model")->getTagihan($_SESSION["UserID"]);
 		$data["lunas"] = $this->model("Dashboard_model")->getLunas($_SESSION["UserID"]);
+		$data['history'] = $this->model("History_model")->getHistory($_SESSION["UserID"]);
 		$data['judul'] = "Dashboard";
 		$this->view('templates/header', $data);
 		$this->view('dashboard/index', $data);
